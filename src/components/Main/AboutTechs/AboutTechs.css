@@ -1,0 +1,49 @@
+.techs {
+    background-color: #272727;
+    display: flex;
+    flex-direction: column;
+    padding: 100px 70px;
+    letter-spacing: -0.04em;
+}
+
+.techs__info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 90px 0 100px;
+    gap: 26px;
+}
+
+.techs__title {
+    margin: 0;
+    font-weight: 400;
+    line-height: 58px;
+    font-size: 50px;
+}
+
+.techs__subtitle {
+    margin: auto;
+    font-weight: 400;
+    line-height: 20px;
+    font-size: 14px;
+    max-width: 460px;
+}
+
+.techs__table {
+    padding: 0;
+    margin: 0 auto 100px;
+    display: grid;
+    list-style-type: none;
+    grid-template-columns: repeat(7, 90px);
+    column-gap: 10px;
+}
+
+.techs__item {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    background-color: #303030;
+    border-radius: 10px;
+    text-align: center;
+    padding: 21px 0;
+}
