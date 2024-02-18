@@ -1,0 +1,24 @@
+.navTab {
+    padding: 0;
+    margin: 151px auto 30px;
+    display: grid;
+    list-style-type: none;
+    grid-template-columns: repeat(3, 96px);
+    column-gap: 10px;
+}
+
+.navTab__link {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #303030;
+    color: #ffffff;
+}
+
+.navTab__link:hover {
+    cursor: pointer;
+    opacity: 70%;
+}
