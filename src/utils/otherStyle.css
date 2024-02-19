@@ -22,3 +22,16 @@
     border-bottom: 1px solid #DADADA;
 }
 
+.link {
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+
+.link:hover {
+    opacity: .7;
+}
+
+.underline {
+    border-bottom: 1px solid #424242;
+}
+

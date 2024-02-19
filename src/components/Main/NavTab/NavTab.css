@@ -17,8 +17,3 @@
     background-color: #303030;
     color: #ffffff;
 }
-
-.navTab__link:hover {
-    cursor: pointer;
-    opacity: 70%;
-}
