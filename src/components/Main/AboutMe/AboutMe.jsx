@@ -15,7 +15,7 @@ function AboutMe() {
                         'caption' cannot appear as a child of 'div'
                         'caption' cannot appear as a child of 'div'
                     </p>
-                    <a className="aboutMe__link" href="https://github.com/OlgaSolo21">GitHub</a>
+                    <a className="aboutMe__link text__link" href="https://github.com/OlgaSolo21">GitHub</a>
                 </div>
                 <img className="aboutMe__pic" src={profileImg} alt="фото профиля"/>
             </div>

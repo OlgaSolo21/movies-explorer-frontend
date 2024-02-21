@@ -35,3 +35,8 @@
     border-bottom: 1px solid #424242;
 }
 
+.text__link {
+    text-decoration: none;
+}
+
+

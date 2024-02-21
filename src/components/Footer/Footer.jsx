@@ -1,6 +1,9 @@
+
+
 export  default function Footer() {
+
     return(
-        <section className="footer">
+        <footer className="footer">
             <article className="footer__info">
                 <p className="footer__caption">Учебный проект Яндекс.Практикум х BeatFilm.</p>
                 <div className="underline"></div>
@@ -14,6 +17,6 @@ export  default function Footer() {
                     </div>
                 </div>
             </article>
-        </section>
+        </footer>
     )
 }
