@@ -8,7 +8,7 @@ import Main from "../Main/Main";
 import Header from "../Header/Header";
 import {useState} from "react";
 import NotFound from "../NotFound/NotFound";
-import Register from "../Register/Register";
+import Register from "../Auth/Register";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false) //авторизация
