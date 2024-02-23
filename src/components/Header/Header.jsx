@@ -19,11 +19,11 @@ export default function Header({auth}) {
                             <NavLink //проверить оба варианта
                                 to="/movies"
                                 className={({isActive}) =>
-                                    `${isActive ? "nav__link_active" : ""} header__title text__link link`}>Фильмы</NavLink>
+                                    `${isActive ? "nav__link-active" : ""} header__title text__link link`}>Фильмы</NavLink>
                             <NavLink
                                 to="/saved-movies"
-                                className="header__title text__link link"
-                                activeClassName="nav__link_active">Сохранённые фильмы</NavLink>
+                                className={({isActive}) =>
+                                    `${isActive ? "nav__link-active" : ""} header__title text__link link`}>Сохранённые фильмы</NavLink>
                         </nav>
                         <Link to="/profile" className="header__infoProfile text__link link">Аккаунт</Link>
                     </header>
