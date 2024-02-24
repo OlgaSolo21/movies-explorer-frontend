@@ -9,6 +9,8 @@ import Header from "../Header/Header";
 import {useState} from "react";
 import NotFound from "../NotFound/NotFound";
 import Register from "../Auth/Register";
+import Login from "../Auth/Login";
+import Profile from "../Profile/Profile";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false) //авторизация
@@ -18,7 +20,10 @@ function App() {
 
     function handleRegister() {
         setIsLoggedIn(true)
-        // navigate('/sign-in', {replace: true})
+        navigate('/signin', {replace: true})
+    }
+    function handleLogin() {
+        setIsLoggedIn(true)
         navigate('/')
     }
     
@@ -38,6 +43,9 @@ function App() {
                   <Route path="aboutMe" element={<AboutMe/>} />
               </Route>
               <Route path="/signup" element={<Register onRegister={handleRegister}/>}/>
+              <Route path="/signin" element={<Login onRegister={handleLogin}/>}/>
+              <Route path="/profile" element={<Profile/>}/>
+
               <Route path="/movies" element={<AboutTechs/>}/>
               <Route path="*" element={<NotFound/>} />
           </Routes>
