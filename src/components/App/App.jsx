@@ -11,19 +11,31 @@ import NotFound from "../NotFound/NotFound";
 import Register from "../Auth/Register";
 import Login from "../Auth/Login";
 import Profile from "../Profile/Profile";
+import Preloader from "../Preloader/Preloader";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false) //авторизация
     const navigate = useNavigate() // навигируем на другой роут
+    const {pathname} = useLocation() // локация пользователя для хэдера и футера
 
-    const {pathname} = useLocation() // локация пользователя
+    const [user, setUser] = useState({name: "Olga", email: 'olga@ya.ru'}) // временное решение для профиля (далее currentUser)
 
-    function handleRegister() {
+    function handleRegister() { //направляем после регистрации
         setIsLoggedIn(true)
         navigate('/signin', {replace: true})
     }
-    function handleLogin() {
+    function handleLogin() { // направляем после логина-входа
         setIsLoggedIn(true)
+        navigate('/')
+    }
+
+    function handleUpdateProfile() { // изменение имени/почты в аккаунте(/profile)
+        setUser(user)
+        navigate('/profile')
+    }
+
+    function handleLogOut() {
+        setIsLoggedIn(false)
         navigate('/')
     }
     
@@ -42,12 +54,18 @@ function App() {
                   <Route path="aboutTechs" element={<AboutTechs/>} />
                   <Route path="aboutMe" element={<AboutMe/>} />
               </Route>
-              <Route path="/signup" element={<Register onRegister={handleRegister}/>}/>
-              <Route path="/signin" element={<Login onRegister={handleLogin}/>}/>
-              <Route path="/profile" element={<Profile/>}/>
-
-              <Route path="/movies" element={<AboutTechs/>}/>
-              <Route path="*" element={<NotFound/>} />
+              <Route path="/signup"
+                     element={<Register onRegister={handleRegister}/>}/>
+              <Route path="/signin"
+                     element={<Login onRegister={handleLogin}/>}/>
+              <Route path="/profile"
+                     element={ <Profile user={user}
+                  onUpdateUser={handleUpdateProfile}
+                  logout={handleLogOut}/>}/>
+              <Route path="/movies"
+                     element={<Preloader/>}/>
+              <Route path="*"
+                     element={<NotFound/>} />
           </Routes>
 
           {pathname === '/' ||

@@ -20,13 +20,22 @@
 .portfolio__navigation {
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+}
+
+.portfolio__link:first-child {
+    padding-top: 0;
 }
 
 .portfolio__link {
     display: flex;
     justify-content: space-between;
     color: #ffffff;
+    padding-top: 20px;
+}
+
+.portfolio__link-border {
+    border-bottom: 1px solid #424242;
+    padding-bottom: 20px;
 }
 
 .portfolio__subtitle {

@@ -56,7 +56,7 @@ export default function Login({onRegister}) {
                         className="auth__button link">Войти</button>
             </form>
             <p className='auth__subtitle'>Еще не зарегистрированы?&ensp;
-                <Link to='/signup' className='link__nav text__link'>Регистрация</Link></p>
+                <Link to='/signup' className='link__nav link'>Регистрация</Link></p>
         </section>
     )
 }

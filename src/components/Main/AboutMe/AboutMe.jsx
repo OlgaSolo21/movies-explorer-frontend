@@ -3,7 +3,7 @@ import Portfolio from "../Portfolio/Portfolio";
 function AboutMe() {
     return (
         <section className="aboutMe">
-            <div className="text__head lineBottom">Студент</div>
+            <div className="text__head">Студент</div>
             <div className="aboutMe__info">
                 <div className="aboutMe__profile">
                     <h2 className="aboutMe__title">Olga</h2>
@@ -15,7 +15,7 @@ function AboutMe() {
                         'caption' cannot appear as a child of 'div'
                         'caption' cannot appear as a child of 'div'
                     </p>
-                    <a className="aboutMe__link text__link" href="https://github.com/OlgaSolo21">GitHub</a>
+                    <a className="aboutMe__link link" href="https://github.com/OlgaSolo21">GitHub</a>
                 </div>
                 <img className="aboutMe__pic" src={profileImg} alt="фото профиля"/>
             </div>

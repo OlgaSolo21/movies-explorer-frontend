@@ -70,6 +70,6 @@ export default function Register({onRegister}) {
                         className="auth__button link">Зарегистрироваться</button>
             </form>
             <p className='auth__subtitle'>Уже зарегистрированы?&ensp;
-                <Link to='/signin' className='link__nav text__link'>Войти</Link></p>
+                <Link to='/signin' className='link__nav link'>Войти</Link></p>
         </section>
     )}

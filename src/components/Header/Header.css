@@ -53,6 +53,7 @@
 /*активная открытая ссылка*/
 .nav__link-active {
     font-weight: 500;
+    /*!*border-bottom: 2px solid #000000;*! // это при 768 и 320 разреш*/
 }
 
 .header__infoProfile {

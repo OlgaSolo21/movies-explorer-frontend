@@ -8,24 +8,24 @@ export default function Header({auth}) {
                     <header className="header">
                         <Link className="header__link-logo link" to="/"></Link>
                         <div className="header__links">
-                            <Link to="/signup" className="header__signin text__link link">Регистрация</Link>
-                            <Link to="/signin" className="header__signup text__link link">Войти</Link>
+                            <Link to="/signup" className="header__signin link">Регистрация</Link>
+                            <Link to="/signin" className="header__signup link">Войти</Link>
                         </div>
                     </header>
                 ) : (//иначе, если авторизован
                     <header className="header">
                         <Link className="header__link-logo link" to="/"></Link>
                         <nav className="header__menu">
-                            <NavLink //проверить оба варианта
+                            <NavLink
                                 to="/movies"
                                 className={({isActive}) =>
-                                    `${isActive ? "nav__link-active" : ""} header__title text__link link`}>Фильмы</NavLink>
+                                    `${isActive ? "nav__link-active" : ""} header__title link`}>Фильмы</NavLink>
                             <NavLink
                                 to="/saved-movies"
                                 className={({isActive}) =>
-                                    `${isActive ? "nav__link-active" : ""} header__title text__link link`}>Сохранённые фильмы</NavLink>
+                                    `${isActive ? "nav__link-active" : ""} header__title link`}>Сохранённые фильмы</NavLink>
                         </nav>
-                        <Link to="/profile" className="header__infoProfile text__link link">Аккаунт</Link>
+                        <Link to="/profile" className="header__infoProfile link">Аккаунт</Link>
                     </header>
                 )}
             </header>
