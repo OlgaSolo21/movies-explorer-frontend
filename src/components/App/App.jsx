@@ -12,13 +12,18 @@ import Register from "../Auth/Register";
 import Login from "../Auth/Login";
 import Profile from "../Profile/Profile";
 import Preloader from "../Preloader/Preloader";
+import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import constantFilm from "../../utils/constantFilm";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false) //авторизация
     const navigate = useNavigate() // навигируем на другой роут
     const {pathname} = useLocation() // локация пользователя для хэдера и футера
 
+    // временные переменные
     const [user, setUser] = useState({name: "Olga", email: 'olga@ya.ru'}) // временное решение для профиля (далее currentUser)
+    const [movies, setMovies] = useState(constantFilm) // // временное решение для карточек с фильмами
 
     function handleRegister() { //направляем после регистрации
         setIsLoggedIn(true)
@@ -63,7 +68,9 @@ function App() {
                   onUpdateUser={handleUpdateProfile}
                   logout={handleLogOut}/>}/>
               <Route path="/movies"
-                     element={<Preloader/>}/>
+                     element={<Movies moviesList={movies} />}/>
+              <Route path="/saved-movies"
+                     element={<SavedMovies/>}/>
               <Route path="*"
                      element={<NotFound/>} />
           </Routes>

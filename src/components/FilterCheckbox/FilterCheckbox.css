@@ -1,0 +1,33 @@
+.checkbox__form {
+    display: flex;
+    margin: 30px 0 42px;
+    justify-content: center;
+}
+
+.checkbox__label {
+    background-color: transparent;
+    background-image: url("../../images/checkboxDisactive.svg");
+    width: 36px;
+    background-repeat: no-repeat;
+    border: none;
+}
+
+.checkbox__label-active {
+    background-color: transparent;
+    background-image: url("../../images/checkboxActive.svg");
+    width: 36px;
+    background-repeat: no-repeat;
+    border: none;
+}
+
+.checkbox__input {
+    display: none;
+}
+
+.checkbox__title {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    margin: 0;
+    padding-left: 13px;
+}

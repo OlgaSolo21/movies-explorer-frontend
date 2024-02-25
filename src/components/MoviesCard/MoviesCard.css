@@ -1,0 +1,7 @@
+.cards__image {
+    width: 360px;
+    height: 201px;
+    background-color: transparent;
+    background-size: contain;
+    object-fit: cover;
+}
