@@ -5,19 +5,19 @@
 }
 
 .checkbox__label {
+    cursor: pointer;
     background-color: transparent;
-    background-image: url("../../images/checkboxDisactive.svg");
     width: 36px;
     background-repeat: no-repeat;
     border: none;
 }
 
+.checkbox__label-inactive {
+    background-image: url("../../images/checkboxDisactive.svg");
+}
+
 .checkbox__label-active {
-    background-color: transparent;
     background-image: url("../../images/checkboxActive.svg");
-    width: 36px;
-    background-repeat: no-repeat;
-    border: none;
 }
 
 .checkbox__input {

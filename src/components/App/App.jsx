@@ -15,15 +15,20 @@ import Preloader from "../Preloader/Preloader";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import constantFilm from "../../utils/constantFilm";
+import BurgerMenuPopup from "../BurgerMenuPopup/BurgerMenuPopup";
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false) //авторизация
     const navigate = useNavigate() // навигируем на другой роут
-    const {pathname} = useLocation() // локация пользователя для хэдера и футера
+    const location = useLocation() // локация пользователя для хэдера и футера
+    const path = location.pathname
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false) //авторизация
+    const [isBurgerMenu, setIsBurgerMenu] = useState(false)
 
     // временные переменные
     const [user, setUser] = useState({name: "Olga", email: 'olga@ya.ru'}) // временное решение для профиля (далее currentUser)
-    const [movies, setMovies] = useState(constantFilm) // // временное решение для карточек с фильмами
+    const [movies, setMovies] = useState(constantFilm) // временное решение для карточек с фильмами
+    const [savedMovies, setSavedMovies] = useState(constantFilm.slice(0, 3))
 
     function handleRegister() { //направляем после регистрации
         setIsLoggedIn(true)
@@ -43,15 +48,23 @@ function App() {
         setIsLoggedIn(false)
         navigate('/')
     }
-    
+
+    function handleOpenBurger() {
+        setIsBurgerMenu(true)
+    }
+
+    function handleCloseBurger() {
+        setIsBurgerMenu(false)
+    }
+
     return (
       <>
-          {pathname !== '/' &&
-          pathname !== '/movies' &&
-          pathname !== '/saved-movies' &&
-          pathname !== '/profile' ? null : <Header auth={isLoggedIn}/> }
+          {path !== '/' &&
+          path !== '/movies' &&
+          path !== '/saved-movies' &&
+          path !== '/profile' ? null :
+              <Header auth={isLoggedIn} openBurger={handleOpenBurger}/> }
 
-          {/*{pathname !== '*' && pathname !== '/signup' && pathname !== '/signin' ? <Header auth={isLoggedIn}/> : null}*/}
           <Routes>
               {/*<Route path="/" element={<Main/>} />*/}
               <Route path="/" element={<PromoProject/>}>
@@ -70,15 +83,19 @@ function App() {
               <Route path="/movies"
                      element={<Movies moviesList={movies} />}/>
               <Route path="/saved-movies"
-                     element={<SavedMovies/>}/>
+                     element={<SavedMovies moviesList={savedMovies}/>}/>
               <Route path="*"
                      element={<NotFound/>} />
           </Routes>
 
-          {pathname === '/' ||
-          pathname === '/movies' ||
-          pathname === '/saved-movies' ? <Footer /> : null}
-          {/*{pathname !== '*' && pathname !== '/signup' && pathname !== '/signin' && pathname !== '/profile' ? <Footer/> : null}*/}
+          {path === '/' ||
+          path === '/movies' ||
+          path === '/saved-movies' ? <Footer /> : null}
+
+          <BurgerMenuPopup
+              isOpen={isBurgerMenu}
+              onClose={handleCloseBurger}
+          />
       </>
   )
 }
