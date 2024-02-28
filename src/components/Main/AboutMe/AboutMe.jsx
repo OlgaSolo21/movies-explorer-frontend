@@ -2,7 +2,7 @@ import profileImg from "../../../images/photo-1444703686981-a3abbc4d4fe3.avif"
 import Portfolio from "../Portfolio/Portfolio";
 function AboutMe() {
     return (
-        <section className="aboutMe">
+        <section className="aboutMe" id="aboutMe">
             <div className="text__head">Студент</div>
             <div className="aboutMe__info">
                 <div className="aboutMe__profile">
@@ -15,7 +15,7 @@ function AboutMe() {
                         'caption' cannot appear as a child of 'div'
                         'caption' cannot appear as a child of 'div'
                     </p>
-                    <a className="aboutMe__link link" href="https://github.com/OlgaSolo21">GitHub</a>
+                    <a className="aboutMe__link link" href="https://github.com/OlgaSolo21" target="_blank">GitHub</a>
                 </div>
                 <img className="aboutMe__pic" src={profileImg} alt="фото профиля"/>
             </div>

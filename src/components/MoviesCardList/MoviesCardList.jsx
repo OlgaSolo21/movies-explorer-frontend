@@ -1,11 +1,9 @@
 import ButtonMore from "../ButtonMore/ButtonMore";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import {useState} from "react";
-import {useLocation} from "react-router-dom";
+import Preloader from "../Preloader/Preloader";
 
-export default function MoviesCardList({moviesList, savedMovesList}) { //РЕНДЕР ВСЕХ КАРТОЧЕК НА СТРАНИЦУ
-    const location = useLocation() // если на странице с сохраненками - кнопка удалить фильм
-    const path = location.pathname
+export default function MoviesCardList({moviesList, isLoading}) { //РЕНДЕР ВСЕХ КАРТОЧЕК НА СТРАНИЦУ
 
     const [countMovies, setCountMovies] = useState(6)
 
@@ -15,16 +13,19 @@ export default function MoviesCardList({moviesList, savedMovesList}) { //РЕН�
 
     return (
         <section className="movies">
-            <ul className="movies__list">
-                {moviesList.slice(0, countMovies).map((movie) => (
-                    <MoviesCard
-                        movie={movie}
-                        key={movie.id}/>
-                ))}
-            </ul>
-            {countMovies < moviesList.length ? (
-                <ButtonMore handleMoreLoad={loadMore}/>
-            ) : null}
+            {isLoading ? <Preloader/> : (
+                <>
+                    <ul className="movies__list">
+                        {moviesList.slice(0, countMovies).map((movie) => (
+                            <MoviesCard
+                                movie={movie}
+                                key={movie.id}/>
+                        ))}
+                    </ul>
+                    {countMovies < moviesList.length ? (
+                        <ButtonMore handleMoreLoad={loadMore}/>) : null}
+                </>
+            )}
         </section>
     )
 }

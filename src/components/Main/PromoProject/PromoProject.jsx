@@ -1,5 +1,4 @@
 import NavTab from "../NavTab/NavTab";
-import {Outlet} from "react-router-dom";
 
 function PromoProject() {
     return (
@@ -8,8 +7,7 @@ function PromoProject() {
                 <h1 className="promo__title">
                     Учебный проект студента факультета Веб-разработки.
                 </h1>
-                <NavTab/>
-                <Outlet/>
+                <NavTab showUnder={0} duration={1000}/>
             </div>
         </section>
     )

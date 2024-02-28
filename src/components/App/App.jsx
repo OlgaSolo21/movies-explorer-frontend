@@ -16,14 +16,16 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import constantFilm from "../../utils/constantFilm";
 import BurgerMenuPopup from "../BurgerMenuPopup/BurgerMenuPopup";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 function App() {
     const navigate = useNavigate() // навигируем на другой роут
-    const location = useLocation() // локация пользователя для хэдера и футера
-    const path = location.pathname
 
     const [isLoggedIn, setIsLoggedIn] = useState(false) //авторизация
     const [isBurgerMenu, setIsBurgerMenu] = useState(false)
+    const [isLoading, setIsLoading] = useState(false) // состояние загрузки
+    const [isSuccess, setIsSuccess] = useState(false) //успешной аутентификации (меняем текст и картинку в попапе InfoTooltip)
+    const [isInfoToolTip, setIsInfoToolTip] = useState(false) //переменная попапа уведомления InfoTooltip
 
     // временные переменные
     const [user, setUser] = useState({name: "Olga", email: 'olga@ya.ru'}) // временное решение для профиля (далее currentUser)
@@ -32,14 +34,20 @@ function App() {
 
     function handleRegister() { //направляем после регистрации
         setIsLoggedIn(true)
+        setIsInfoToolTip(true)
+        setIsSuccess(true)
         navigate('/signin', {replace: true})
     }
     function handleLogin() { // направляем после логина-входа
         setIsLoggedIn(true)
+        setIsInfoToolTip(true)
+        setIsSuccess(true)
         navigate('/')
     }
 
     function handleUpdateProfile() { // изменение имени/почты в аккаунте(/profile)
+        setIsInfoToolTip(true)
+        setIsSuccess(true)
         setUser(user)
         navigate('/profile')
     }
@@ -53,25 +61,18 @@ function App() {
         setIsBurgerMenu(true)
     }
 
-    function handleCloseBurger() {
+    function handleClosePopup() {
         setIsBurgerMenu(false)
+        setIsInfoToolTip(false)
     }
 
     return (
       <>
-          {path !== '/' &&
-          path !== '/movies' &&
-          path !== '/saved-movies' &&
-          path !== '/profile' ? null :
-              <Header auth={isLoggedIn} openBurger={handleOpenBurger}/> }
+          <Header auth={isLoggedIn} openBurger={handleOpenBurger} />
 
           <Routes>
-              {/*<Route path="/" element={<Main/>} />*/}
-              <Route path="/" element={<PromoProject/>}>
-                  <Route path="aboutProject" element={<AboutProject/>} />
-                  <Route path="aboutTechs" element={<AboutTechs/>} />
-                  <Route path="aboutMe" element={<AboutMe/>} />
-              </Route>
+              <Route path="/"
+                     element={<Main/>} />
               <Route path="/signup"
                      element={<Register onRegister={handleRegister}/>}/>
               <Route path="/signin"
@@ -81,20 +82,24 @@ function App() {
                   onUpdateUser={handleUpdateProfile}
                   logout={handleLogOut}/>}/>
               <Route path="/movies"
-                     element={<Movies moviesList={movies} />}/>
+                     element={<Movies moviesList={movies} isLoading={isLoading}/>}/>
               <Route path="/saved-movies"
                      element={<SavedMovies moviesList={savedMovies}/>}/>
               <Route path="*"
                      element={<NotFound/>} />
           </Routes>
 
-          {path === '/' ||
-          path === '/movies' ||
-          path === '/saved-movies' ? <Footer /> : null}
+          <Footer/>
 
           <BurgerMenuPopup
               isOpen={isBurgerMenu}
-              onClose={handleCloseBurger}
+              onClose={handleClosePopup}
+          />
+
+          <InfoTooltip
+              isSuccess={ isSuccess }
+              isOpen={ isInfoToolTip }
+              onClose={ handleClosePopup }
           />
       </>
   )

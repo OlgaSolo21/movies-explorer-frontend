@@ -1,6 +1,8 @@
 import {Link, NavLink} from "react-router-dom";
+import {useRef, useState} from "react";
 
 export default function BurgerMenuPopup({isOpen, onClose}) {
+
     return (
         <header>
             <div className={`popup ${isOpen ? 'popup_opened' : ''}`}>
@@ -14,19 +16,22 @@ export default function BurgerMenuPopup({isOpen, onClose}) {
                     <div className="popup__navigation">
                         <nav className="popup__links">
                             <NavLink
+                                onClick={onClose}
                                 to="/"
                                 className={({isActive}) =>
                                     `${isActive ? "popup__links-active" : ""} popup__title link`}>Главная</NavLink>
                             <NavLink
+                                onClick={onClose}
                                 to="/movies"
                                 className={({isActive}) =>
                                     `${isActive ? "popup__links-active" : ""} popup__title link`}>Фильмы</NavLink>
                             <NavLink
+                                onClick={onClose}
                                 to="/saved-movies"
                                 className={({isActive}) =>
                                     `${isActive ? "popup__links-active" : ""} popup__title link`}>Сохранённые фильмы</NavLink>
                         </nav>
-                        <Link to="/profile" className="popup__linkProfile link">Аккаунт</Link>
+                        <Link onClick={onClose} to="/profile" className="popup__linkProfile link">Аккаунт</Link>
                     </div>
                 </div>
             </div>

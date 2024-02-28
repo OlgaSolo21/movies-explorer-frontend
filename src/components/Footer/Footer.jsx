@@ -1,22 +1,31 @@
-
+import {useLocation} from "react-router-dom";
 
 export  default function Footer() {
+    const location = useLocation() // локация пользователя для хэдера и футера
+    const path = location.pathname
 
     return(
-        <footer className="footer">
-            <article className="footer__info">
-                <p className="footer__caption">Учебный проект Яндекс.Практикум х BeatFilm.</p>
-                <div className="underline"></div>
-                <div className="footer__navigation">
-                    <p className="footer__copyright">&copy; 2024</p>
-                    <div className="footer__links">
-                        <a href="https://practicum.yandex.ru/"
-                           className="footer__link footer__copyright link">Яндекс.Практикум</a>
-                        <a href="https://github.com/"
-                           className="footer__link footer__copyright link">Github</a>
-                    </div>
-                </div>
-            </article>
+        <footer>
+            {path === '/' ||
+            path === '/movies' ||
+            path === '/saved-movies' ? (
+                <footer className="footer">
+                    <article className="footer__info">
+                        <p className="footer__caption">Учебный проект Яндекс.Практикум х BeatFilm.</p>
+                        <div className="underline"></div>
+                        <div className="footer__navigation">
+                            <p className="footer__copyright">&copy; 2024</p>
+                            <div className="footer__links">
+                                <a href="https://practicum.yandex.ru/"
+                                   target="_blank"
+                                   className="footer__link footer__copyright link">Яндекс.Практикум</a>
+                                <a href="https://github.com/"
+                                   target="_blank"
+                                   className="footer__link footer__copyright link">Github</a>
+                            </div>
+                        </div>
+                    </article>
+                </footer>) : null}
         </footer>
     )
 }
