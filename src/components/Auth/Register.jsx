@@ -67,7 +67,7 @@ export default function Register({onRegister}) {
                     <span className="auth__span-error">{inputError.password}</span>
                 </label>
                 <button type="submit"
-                        className="auth__button link">Зарегистрироваться</button>
+                        className="auth__button auth__button_register link">Зарегистрироваться</button>
             </form>
             <p className='auth__subtitle'>Уже зарегистрированы?&ensp;
                 <Link to='/signin' className='link__nav link'>Войти</Link></p>

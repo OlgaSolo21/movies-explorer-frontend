@@ -7,7 +7,7 @@
 .checkbox__label {
     cursor: pointer;
     background-color: transparent;
-    width: 36px;
+    width: 34px;
     background-repeat: no-repeat;
     border: none;
 }
@@ -20,9 +20,9 @@
     background-image: url("../../images/checkboxActive.svg");
 }
 
-.checkbox__input {
-    display: none;
-}
+/*.checkbox__input {*/
+/*    display: none;*/
+/*}*/
 
 .checkbox__title {
     font-size: 12px;
@@ -30,4 +30,21 @@
     line-height: 18px;
     margin: 0;
     padding-left: 13px;
+}
+
+@media screen and (max-width: 768px){
+    .checkbox__form {
+        margin-top: 43px;
+    }
+}
+
+
+@media screen and (max-width: 320px){
+    .checkbox__form {
+        margin-top: 49px;
+    }
+
+    .checkbox__title {
+        font-size: 11px;
+    }
 }

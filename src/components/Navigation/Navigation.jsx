@@ -2,7 +2,7 @@ import {Link, NavLink} from "react-router-dom";
 
 export default function Navigation({openBurger}) {
     return (
-        <section className="navigation">
+        <section className="navigation" id="header">
             <div className="header">
                 <Link className="header__link-logo link" to="/"></Link>
                 <nav className="navigation__menu">

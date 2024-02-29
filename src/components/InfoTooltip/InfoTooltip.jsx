@@ -3,20 +3,20 @@ import errorIcon from '../../images/errorIcon.svg'
 
 export default function InfoTooltip({isOpen, onClose, isSuccess}) {
     return (
-        <div className={`popup ${isOpen ? 'popup_opened' : ''}`}>
-            <div className="popup__container">
+        <div className={`tooltip ${isOpen ? 'tooltip_opened' : ''}`}>
+            <div className="tooltip__content">
                 <button
                     type="button"
                     aria-label="Close"
-                    className='popup__close cursor'
+                    className='tooltip__close'
                     onClick={onClose}
                 />
                 <img
-                    className='popup__auth-image'
+                    className='tooltip__image'
                     alt='Изображение уведомления'
                     src={`${isSuccess ? successIcon : errorIcon}`}
                 />
-                <h2 className='popup__notification'>{`${isSuccess ? "Вы успешно зарегистрировались!" : "Что-то пошло не так! Попробуйте ещё раз."}`}</h2>
+                <h2 className='tooltip__title'>{`${isSuccess ? "Успешно" : "Что-то пошло не так! Попробуйте ещё раз."}`}</h2>
             </div>
         </div>
     )

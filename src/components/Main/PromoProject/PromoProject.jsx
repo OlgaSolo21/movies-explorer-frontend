@@ -1,5 +1,6 @@
 import NavTab from "../NavTab/NavTab";
 
+
 function PromoProject() {
     return (
         <section className="promo">
@@ -7,7 +8,7 @@ function PromoProject() {
                 <h1 className="promo__title">
                     Учебный проект студента факультета Веб-разработки.
                 </h1>
-                <NavTab showUnder={0} duration={1000}/>
+                <NavTab/>
             </div>
         </section>
     )

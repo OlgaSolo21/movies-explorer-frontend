@@ -7,14 +7,14 @@ export default function Header({auth, openBurger}) {
     const path = location.pathname
 
     return(
-        <header>
+        <header id="header">
             {path !== '/' &&
             path !== '/movies' &&
             path !== '/saved-movies' &&
             path !== '/profile' ? null : (
-                <header>
+                <header id="header">
                     {!auth ? (//если не авторизован
-                        <div className="header">
+                        <div className="header" id="header">
                             <Link className="header__link-logo link" to="/"></Link>
                             <div className="header__links">
                                 <Link to="/signup" className="header__signin link">Регистрация</Link>

@@ -5,7 +5,7 @@ export default function ScrollToUp() { // доработать еще начат
 
     window.addEventListener('scroll', function() {
       const scrollUpBtn = document.getElementById('scrollUpBtn');
-        if (window.scrollY > 100) {
+        if (window.scrollY > 20) {
             scrollUpBtn.style.display = "block";
         } else {
             scrollUpBtn.style.display = "none";

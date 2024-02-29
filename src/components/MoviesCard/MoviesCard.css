@@ -83,3 +83,25 @@
     height: 21px;
     background-color: transparent;
 }
+
+@media screen and (max-width: 890px){
+    .movie__item {
+        gap: 25px;
+    }
+
+    .movie__content {
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .movie__item {
+        gap: 16px;
+    }
+
+    .movie__title {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 15px;
+    }
+}

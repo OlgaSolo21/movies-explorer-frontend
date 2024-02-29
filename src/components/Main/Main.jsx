@@ -8,11 +8,12 @@ import ScrollToUp from "../ScrollToUp/ScrollToUp";
 export default function Main() {
     return (
         <main>
+            {/*<ScrollToUp /> ДОРАБОТАТЬ КОМПОНЕНТ
+            TypeError: Cannot read properties of null (reading 'style')*/}
             <PromoProject/>
             <AboutProject />
             <AboutTechs />
             <AboutMe />
-            <ScrollToUp showUnder={0} duration={1000}/>
         </main>
     )
 }

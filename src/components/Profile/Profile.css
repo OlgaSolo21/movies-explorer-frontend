@@ -17,18 +17,19 @@
 .profile__form {
     display: flex;
     flex-direction: column;
-    min-width: 100%;
+    width: 100%;
 }
 
 .profile__text {
     font-size: 11px;
     line-height: 13px;
+    font-weight: 500;
 }
 
 .profile__label {
+    white-space: nowrap;
     display: flex;
     justify-content: space-between;
-    font-weight: 500;
     border-bottom: 1px solid #424242;
     padding: 16px 0;
 }
@@ -83,4 +84,33 @@
     min-height: 45px;
     border-radius: 3px;
     margin: 220px 0 70px;
+}
+
+@media screen and (max-width: 768px){
+    .profile__title {
+        padding: 236px 0 96px;
+    }
+
+    .profile__btn {
+        margin: 210px 0 269px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .profile {
+        margin: 0 30px;
+    }
+
+    .profile__title {
+        padding: 70px 0 80px;
+    }
+
+    .profile__form {
+        max-width: 260px;
+        width: 100%;
+    }
+
+    .profile__btn {
+        margin: 379px 0 40px;
+    }
 }
