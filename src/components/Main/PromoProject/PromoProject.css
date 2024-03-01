@@ -19,3 +19,45 @@
     line-height: 58px;
     letter-spacing: -0.04em;
 }
+
+@media screen and (max-width: 1200px) {
+    .promo__title {
+        padding: 160px 44px 0;
+    }
+}
+
+@media screen and (max-width: 820px){
+    .promo {
+        padding: 20px 20px 0;
+    }
+
+    .promo__title {
+        font-size: 40px;
+        line-height: 52px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .promo__title {
+        padding: 350px 24px 0;
+    }
+}
+
+@media screen and (max-width: 460px){
+    .promo__title {
+        font-size: 33px;
+        line-height: 40px;
+    }
+}
+
+@media screen and (max-width: 360px){
+    .promo {
+        padding: 14px 14px 0;
+    }
+
+    .promo__title {
+        padding: 220px 0 0;
+        font-size: 29px;
+        line-height: 37px;
+    }
+}

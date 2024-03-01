@@ -1,18 +1,31 @@
-export default function ScrollToUp() { // доработать еще начатьное состояние (при обновлении страницы кнопка видна)
-    function scrollToUp() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+import {useState} from "react";
 
-    window.addEventListener('scroll', function() {
-      const scrollUpBtn = document.getElementById('scrollUpBtn');
-        if (window.scrollY > 20) {
-            scrollUpBtn.style.display = "block";
+export default function ScrollToUp() { // доработать еще начатьное состояние (при обновлении страницы кнопка видна)
+    const [visible, setVisible] = useState(false);
+
+    const handleScroll = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        setVisible(scrollTop > 0);
+    };
+
+    const scrollToTop = () => {
+        const scrollStep = -window.scrollY / (500 / 15);
+        const scrollAnimation = window.requestAnimationFrame(scrollToTop);
+
+        if (window.scrollY !== 0) {
+            window.scrollBy(0, scrollStep);
         } else {
-            scrollUpBtn.style.display = "none";
+            window.cancelAnimationFrame(scrollAnimation);
         }
-    });
+    };
+
+    window.addEventListener("scroll", handleScroll);
 
     return (
-        <button id="scrollUpBtn" onClick={ scrollToUp } className="scrollUp">Наверх</button>
+        <>
+            {visible && (
+                <p id="scrollUpBtn" onClick={scrollToTop} className="scrollUp">Наверх</p>
+            )}
+        </>
     )
 }

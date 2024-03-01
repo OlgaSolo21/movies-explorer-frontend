@@ -8,6 +8,7 @@ export default function Portfolio() {
                     <a
                         href="https://github.com/OlgaSolo21/how-to-learn"
                         target="_blank"
+                        rel="noreferrer"
                         className="portfolio__link link portfolio__link-border">
                         <p className="portfolio__subtitle">Статичный сайт</p>
                         <img src={arrow} alt="стрелка ссылка" className="portfolio__pic"/>
@@ -15,6 +16,7 @@ export default function Portfolio() {
                     <a
                         href="https://olgasolo21.github.io/russian-travel/"
                         target="_blank"
+                        rel="noreferrer"
                         className="portfolio__link link portfolio__link-border">
                         <p className="portfolio__subtitle">Адаптивный сайт</p>
                         <img src={arrow} alt="стрелка ссылка" className="portfolio__pic"/>
@@ -22,6 +24,7 @@ export default function Portfolio() {
                     <a
                         href="https://github.com/OlgaSolo21/react-mesto-api-full-gha?tab=readme-ov-file"
                         target="_blank"
+                        rel="noreferrer"
                         className="portfolio__link link">
                         <p className="portfolio__subtitle">Одностраничное приложение</p>
                         <img src={arrow} alt="стрелка ссылка" className="portfolio__pic"/>

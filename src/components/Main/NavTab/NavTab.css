@@ -17,3 +17,22 @@
     background-color: #303030;
     color: #ffffff;
 }
+
+@media screen and (max-width: 768px) {
+    .navTab {
+        margin-top: 314px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .navTab {
+        margin: 212px auto 17px;
+        grid-template-columns: repeat(3, 82px);
+        column-gap: 6px;
+    }
+
+    .navTab__link {
+        font-size: 10px;
+        padding: 5px 0;
+    }
+}

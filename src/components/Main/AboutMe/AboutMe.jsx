@@ -1,4 +1,4 @@
-import profileImg from "../../../images/photo-1444703686981-a3abbc4d4fe3.avif"
+import profileImg from "../../../images/myFoto.jpg"
 import Portfolio from "../Portfolio/Portfolio";
 function AboutMe() {
     return (
@@ -6,16 +6,21 @@ function AboutMe() {
             <div className="text__head">Студент</div>
             <div className="aboutMe__info">
                 <div className="aboutMe__profile">
-                    <h2 className="aboutMe__title">Olga</h2>
+                    <h2 className="aboutMe__title">Ольга</h2>
                     <p className="aboutMe__subtitle">Фронтенд-разработчик, 30 лет</p>
                     <p className="aboutMe__caption">
-                        Тут будет инфа обо мне Тут будет инфа обо мне
-                        'caption' cannot appear as a child of 'div'
-                        'caption' cannot appear as a child of 'div'
-                        'caption' cannot appear as a child of 'div'
-                        'caption' cannot appear as a child of 'div'
+                        Обо мне:
+                        Я прошла путь от менеджера по работе с премиум-клиентами до бизнес-тренера.
+                        Однако еще со школы любила кодить и создавать интересные проекты.
+                        Информатика в целом была моим вторым хобби.
+                        На данный момент я достигла определенных высот в сфере тренерства и приняла решение
+                        сменить деятельность и посвятить свое время разработке.
+                        Живу в солнечном Сочи и обожаю котов.
                     </p>
-                    <a className="aboutMe__link link" href="https://github.com/OlgaSolo21" target="_blank">GitHub</a>
+                    <a className="aboutMe__link link"
+                       href="https://github.com/OlgaSolo21"
+                       rel="noreferrer"
+                       target="_blank">GitHub</a>
                 </div>
                 <img className="aboutMe__pic" src={profileImg} alt="фото профиля"/>
             </div>
