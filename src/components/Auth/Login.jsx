@@ -21,7 +21,7 @@ export default function Login({onRegister}) {
     return(
         <section className='register'>
             <div className="auth">
-                <Link className="header__link-logo link" to="/"></Link>
+                <Link className="header__link-logo link" to="/"/>
                 <h1 className="auth__title">Рады видеть!</h1>
             </div>
             <form className='auth__form'

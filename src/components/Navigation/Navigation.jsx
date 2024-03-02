@@ -4,7 +4,7 @@ export default function Navigation({openBurger}) {
     return (
         <section className="navigation" id="header">
             <div className="header">
-                <Link className="header__link-logo link" to="/"></Link>
+                <Link className="header__link-logo link" to="/"/>
                 <nav className="navigation__menu">
                     <NavLink
                         to="/movies"

@@ -15,7 +15,7 @@ export default function Header({auth, openBurger}) {
                 <header id="header">
                     {!auth ? (//если не авторизован
                         <div className="header" id="header">
-                            <Link className="header__link-logo link" to="/"></Link>
+                            <Link className="header__link-logo link" to="/"/>
                             <div className="header__links">
                                 <Link to="/signup" className="header__signin link">Регистрация</Link>
                                 <Link to="/signin" className="header__signup link">Войти</Link>

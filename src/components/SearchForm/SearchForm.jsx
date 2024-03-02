@@ -8,8 +8,10 @@ export default function SearchForm() {
         <section className="search">
             <form className="search__form" onSubmit={handleFindSubmit}>
                 <input
+                    type="text"
                     className="search__input"
                     placeholder="Фильм"
+                    required
                 />
                 <button className="search__btn-find link" type="submit"/>
             </form>
