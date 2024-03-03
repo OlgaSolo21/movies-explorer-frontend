@@ -21,9 +21,9 @@ export default function Register({onRegister}) {
     }
 
     return (
-        <section className='register'>
-            <div className="auth">
-                <Link className="header__link-logo link" to="/"/>
+        <section className='auth'>
+            <div className="auth__head">
+                <Link className="auth__link-logo link" to="/"/>
                 <h1 className="auth__title">Добро пожаловать!</h1>
             </div>
             <form className='auth__form'
@@ -70,6 +70,6 @@ export default function Register({onRegister}) {
                         className="auth__button auth__button_register link">Зарегистрироваться</button>
             </form>
             <p className='auth__subtitle'>Уже зарегистрированы?&ensp;
-                <Link to='/signin' className='link__nav link'>Войти</Link></p>
+                <Link to='/signin' className='link-nav link'>Войти</Link></p>
         </section>
     )}

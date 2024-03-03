@@ -4,7 +4,7 @@
     margin: 18px 70px;
 }
 
-.header__link-logo {
+.header__link-logo, .auth__link-logo {
     background-image: url("../../images/logo.svg");
     width: 38px;
     height: 38px;

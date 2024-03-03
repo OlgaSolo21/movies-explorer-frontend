@@ -19,9 +19,9 @@ export default function Login({onRegister}) {
         setInputError({...inputError, [name]: validationMessage});
     }
     return(
-        <section className='register'>
-            <div className="auth">
-                <Link className="header__link-logo link" to="/"/>
+        <section className='auth'>
+            <div className="auth__head">
+                <Link className="auth__link-logo link" to="/"/>
                 <h1 className="auth__title">Рады видеть!</h1>
             </div>
             <form className='auth__form'
@@ -56,7 +56,7 @@ export default function Login({onRegister}) {
                         className="auth__button auth__button_login link">Войти</button>
             </form>
             <p className='auth__subtitle'>Еще не зарегистрированы?&ensp;
-                <Link to='/signup' className='link__nav link'>Регистрация</Link></p>
+                <Link to='/signup' className='link-nav link'>Регистрация</Link></p>
         </section>
     )
 }

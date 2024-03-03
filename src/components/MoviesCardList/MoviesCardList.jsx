@@ -12,10 +12,10 @@ export default function MoviesCardList({moviesList, isLoading}) { //РЕНДЕР
     }
 
     return (
-        <section className="movies">
+        <section className="movie">
             {isLoading ? <Preloader/> : (
                 <>
-                    <ul className="movies__list">
+                    <ul className="movie__list">
                         {moviesList.slice(0, countMovies).map((movie) => (
                             <MoviesCard
                                 movie={movie}

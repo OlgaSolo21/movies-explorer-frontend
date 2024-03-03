@@ -23,10 +23,10 @@ export default function Profile({user, onUpdateUser, logout}) {
         <section className="profile">
             <h2 className="profile__title">Привет, {user.name}!</h2>
             <form className="profile__form">
-                <label className="profile__label profile__text">Имя
+                <label className="profile__label">Имя
                     <input
                         type="text"
-                        className="profile__input profile__text"
+                        className="profile__input"
                         name="name"
                         minLength={2}
                         required
@@ -35,9 +35,9 @@ export default function Profile({user, onUpdateUser, logout}) {
                         disabled={!inputEdit}
                     />
                 </label>
-                <label className="profile__label profile__text">E-mail
+                <label className="profile__label">E-mail
                     <input
-                        className='profile__input profile__text'
+                        className='profile__input'
                         type="email"
                         name="email"
                         required

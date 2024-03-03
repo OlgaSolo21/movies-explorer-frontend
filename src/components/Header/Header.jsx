@@ -12,9 +12,9 @@ export default function Header({auth, openBurger}) {
             path !== '/movies' &&
             path !== '/saved-movies' &&
             path !== '/profile' ? null : (
-                <header id="header">
+                <section>
                     {!auth ? (//если не авторизован
-                        <div className="header" id="header">
+                        <div className="header">
                             <Link className="header__link-logo link" to="/"/>
                             <div className="header__links">
                                 <Link to="/signup" className="header__signin link">Регистрация</Link>
@@ -24,7 +24,7 @@ export default function Header({auth, openBurger}) {
                     ) : (//иначе, если авторизован
                         <Navigation openBurger={openBurger} />
                     )}
-                </header>
+                </section>
             )}
         </header>
     )

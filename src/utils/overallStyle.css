@@ -11,7 +11,7 @@
 }
 
 /* общие стили для лендинга "о проекте/технологиях/студенте"*/
-.text__head {
+.text-head {
     font-weight: 400;
     line-height: 27px;
     font-size: 22px;
@@ -32,7 +32,7 @@
     opacity: .7;
 }
 
-.link__nav {
+.link-nav  {
     color: #4285F4;
     font-size: 14px;
     line-height: 17px;
@@ -40,7 +40,7 @@
 }
 
 @media screen and (max-width: 320px) {
-    .link__nav {
+    .link-nav {
         font-size: 12px;
         line-height: 15px;
     }

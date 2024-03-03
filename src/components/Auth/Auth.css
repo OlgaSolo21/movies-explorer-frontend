@@ -1,4 +1,4 @@
-.register {
+.auth {
     display: flex;
     flex-direction: column;
     max-width: 396px;
@@ -6,7 +6,7 @@
     max-height: 100%;
 }
 
-.auth {
+.auth__head {
     display: flex;
     flex-direction: column;
     align-items: start;

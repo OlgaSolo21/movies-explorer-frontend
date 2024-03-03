@@ -9,7 +9,7 @@ export  default function Footer() {
             {path === '/' ||
             path === '/movies' ||
             path === '/saved-movies' ? (
-                <footer className="footer">
+                <section className="footer">
                     <article className="footer__info">
                         <p className="footer__caption">Учебный проект Яндекс.Практикум х BeatFilm.</p>
                         <div className="footer__navigation">
@@ -26,7 +26,7 @@ export  default function Footer() {
                             </div>
                         </div>
                     </article>
-                </footer>) : null}
+                </section>) : null}
         </footer>
     )
 }
