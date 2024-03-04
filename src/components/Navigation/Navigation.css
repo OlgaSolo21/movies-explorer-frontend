@@ -1,0 +1,63 @@
+.navigation__menu {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.navigation__title {
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+/*активная открытая ссылка*/
+.navigation__link-active {
+    font-weight: 500;
+}
+
+.navigation__infoProfile {
+    border-radius: 20px;
+    background-color: #313131;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 8px 20px;
+}
+
+.burger {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .navigation__menu,
+    .navigation__infoProfile {
+        display: none;
+    }
+
+    .burger {
+        display: flex;
+        position: relative;
+    }
+
+    .burger__button {
+        background-image: url("../../images/burgerMenu.svg");
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        top: 0;
+        right: 0;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .burger__button {
+        width: 40px;
+        height: 43px;
+    }
+}
+
