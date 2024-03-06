@@ -1,22 +1,20 @@
-import PromoProject from "../Main/PromoProject/PromoProject";
 import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import AboutProject from "../Main/AboutProject/AboutProject";
-import AboutTechs from "../Main/AboutTechs/AboutTechs";
-import AboutMe from "../Main/AboutMe/AboutMe";
+
 import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
 import Header from "../Header/Header";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import NotFound from "../NotFound/NotFound";
 import Register from "../Auth/Register";
 import Login from "../Auth/Login";
 import Profile from "../Profile/Profile";
-import Preloader from "../Preloader/Preloader";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import constantFilm from "../../utils/constantFilm";
 import BurgerMenuPopup from "../BurgerMenuPopup/BurgerMenuPopup";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+
+import * as mainApi from "../../utils/MainApi"
 
 function App() {
     const navigate = useNavigate() // навигируем на другой роут
@@ -32,17 +30,58 @@ function App() {
     const [movies, setMovies] = useState(constantFilm) // временное решение для карточек с фильмами
     const [savedMovies, setSavedMovies] = useState(constantFilm.slice(0, 3))
 
-    function handleRegister() { //направляем после регистрации
-        setIsLoggedIn(true)
-        setIsInfoToolTip(true)
-        setIsSuccess(true)
-        navigate('/signin', {replace: true})
+    //проверка токена
+    useEffect(() => {
+        const jwt = localStorage.getItem('jwt');
+        if (jwt) {
+            // setIsLoading(false);
+            mainApi.getContent(jwt)
+                .then((res) => {
+                    setIsLoggedIn(true)
+                })
+                .catch(console.error)
+        }
+        // else {
+        //     setIsLoading(true);
+        // }
+    }, [])
+
+    function handleRegister({name, email, password}) { //направляем после регистрации
+        mainApi.register(name, email, password)
+            .then(res => {
+               if (res) {
+                   setIsLoggedIn(true)
+                   setIsInfoToolTip(true)
+                   setIsSuccess(true)
+                   navigate('/signin', {replace: true})
+                   // handleLogin({email, password})
+               }
+            })
+            .catch(err => {
+                setIsLoggedIn(false)
+                setIsInfoToolTip(true)
+                setIsSuccess(false)
+                console.log(err)
+            })
+
     }
-    function handleLogin() { // направляем после логина-входа
-        setIsLoggedIn(true)
-        setIsInfoToolTip(true)
-        setIsSuccess(true)
-        navigate('/')
+
+    function handleLogin({email, password}) { // направляем после логина-входа
+        mainApi.login(email, password)
+            .then(res => {
+                localStorage.setItem('jwt', res.token)
+                setIsLoggedIn(true)
+                setIsInfoToolTip(true)
+                setIsSuccess(true)
+                navigate("/movies", {replace: true});
+            })
+            .catch(err => {
+                setIsLoggedIn(false)
+                setIsInfoToolTip(true)
+                setIsSuccess(false)
+                console.log(err)
+            })
+
     }
 
     function handleUpdateProfile() { // изменение имени/почты в аккаунте(/profile)
@@ -54,6 +93,7 @@ function App() {
 
     function handleLogOut() {
         setIsLoggedIn(false)
+        localStorage.removeItem('jwt')
         navigate('/')
     }
 
@@ -76,7 +116,7 @@ function App() {
               <Route path="/signup"
                      element={<Register onRegister={handleRegister}/>}/>
               <Route path="/signin"
-                     element={<Login onRegister={handleLogin}/>}/>
+                     element={<Login onLogin={handleLogin}/>}/>
               <Route path="/profile"
                      element={ <Profile user={user}
                   onUpdateUser={handleUpdateProfile}

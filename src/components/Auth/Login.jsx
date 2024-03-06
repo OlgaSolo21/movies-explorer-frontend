@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import {useState} from "react";
 
-export default function Login({onRegister}) {
+export default function Login({onLogin}) {
     const [inputValue, setInputValue] = useState({
         email: '',
         password: ''
@@ -10,7 +10,8 @@ export default function Login({onRegister}) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        onRegister(inputValue);
+        onLogin(inputValue);
+        console.log(inputValue)
     }
 
     function handleChangeInput(e) {
