@@ -1,9 +1,10 @@
 import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 
+import CurrentUserContext from "../../context/CurrentUserContext";
 import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
 import Header from "../Header/Header";
-import {useEffect, useState} from "react";
 import NotFound from "../NotFound/NotFound";
 import Register from "../Auth/Register";
 import Login from "../Auth/Login";
@@ -15,18 +16,25 @@ import BurgerMenuPopup from "../BurgerMenuPopup/BurgerMenuPopup";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 import * as mainApi from "../../utils/MainApi"
+import {editProfilePatch} from "../../utils/MainApi";
 
 function App() {
-    const navigate = useNavigate() // навигируем на другой роут
-
-    const [isLoggedIn, setIsLoggedIn] = useState(false) //авторизация
+// навигируем на другой роут
+    const navigate = useNavigate()
+//авторизация
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+// бургер меню на 768 и 320
     const [isBurgerMenu, setIsBurgerMenu] = useState(false)
-    const [isLoading, setIsLoading] = useState(false) // состояние загрузки
-    const [isSuccess, setIsSuccess] = useState(false) //успешной аутентификации (меняем текст и картинку в попапе InfoTooltip)
-    const [isInfoToolTip, setIsInfoToolTip] = useState(false) //переменная попапа уведомления InfoTooltip
+// состояние загрузки
+    const [isLoading, setIsLoading] = useState(false)
+//успешной аутентификации (меняем текст и картинку в попапе InfoTooltip)
+    const [isSuccess, setIsSuccess] = useState(false)
+//переменная попапа уведомления InfoTooltip
+    const [isInfoToolTip, setIsInfoToolTip] = useState(false)
+// стейт currentUser в корневом компоненте чтобы данные о текущем пользователе были видны во всех местах
+    const [currentUser, setCurrentUser] = useState({})
 
     // временные переменные
-    const [user, setUser] = useState({name: "Olga", email: 'olga@ya.ru'}) // временное решение для профиля (далее currentUser)
     const [movies, setMovies] = useState(constantFilm) // временное решение для карточек с фильмами
     const [savedMovies, setSavedMovies] = useState(constantFilm.slice(0, 3))
 
@@ -36,7 +44,7 @@ function App() {
         if (jwt) {
             // setIsLoading(false);
             mainApi.getContent(jwt)
-                .then((res) => {
+                .then(() => {
                     setIsLoggedIn(true)
                 })
                 .catch(console.error)
@@ -45,6 +53,18 @@ function App() {
         //     setIsLoading(true);
         // }
     }, [])
+
+    // монтирование данных на странице
+    useEffect(() => {
+        const jwt = localStorage.getItem('jwt');
+        if (jwt && isLoggedIn) {
+            mainApi.getContent(jwt)
+                .then((data) => {
+                    setCurrentUser(data)
+                })
+                .catch(console.error)
+        }
+    }, [isLoggedIn])
 
     function handleRegister({name, email, password}) { //направляем после регистрации
         mainApi.register(name, email, password)
@@ -84,11 +104,20 @@ function App() {
 
     }
 
-    function handleUpdateProfile() { // изменение имени/почты в аккаунте(/profile)
-        setIsInfoToolTip(true)
-        setIsSuccess(true)
-        setUser(user)
-        navigate('/profile')
+    function handleUpdateProfile({name, email}) { // изменение имени/почты в аккаунте(/profile)
+        mainApi.editProfilePatch(name, email)
+            .then(() => {
+                setIsInfoToolTip(true)
+                setIsSuccess(true)
+                setCurrentUser({name: currentUser.name, email: currentUser.email})
+                navigate('/profile')
+            })
+            .catch(err => {
+                setIsLoggedIn(false)
+                setIsInfoToolTip(true)
+                setIsSuccess(false)
+                console.log(err)
+            })
     }
 
     function handleLogOut() {
@@ -107,7 +136,7 @@ function App() {
     }
 
     return (
-      <>
+      <CurrentUserContext.Provider value={ currentUser }>
           <Header auth={isLoggedIn} openBurger={handleOpenBurger} />
 
           <Routes>
@@ -118,7 +147,7 @@ function App() {
               <Route path="/signin"
                      element={<Login onLogin={handleLogin}/>}/>
               <Route path="/profile"
-                     element={ <Profile user={user}
+                     element={ <Profile
                   onUpdateUser={handleUpdateProfile}
                   logout={handleLogOut}/>}/>
               <Route path="/movies"
@@ -141,7 +170,7 @@ function App() {
               isOpen={ isInfoToolTip }
               onClose={ handleClosePopup }
           />
-      </>
+      </CurrentUserContext.Provider>
   )
 }
 

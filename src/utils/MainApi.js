@@ -43,7 +43,6 @@ export const login = (email, password) => { // вход
 
 }
 
-
 export const getContent = (token) => { //проверка токена
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
@@ -52,6 +51,22 @@ export const getContent = (token) => { //проверка токена
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
         }
+    })
+        .then((res) => handleResponse(res))
+}
+
+export const editProfilePatch = (name, email) => {
+    return fetch(`${BASE_URL}/users/me`, {
+        method: 'PATCH',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            name,
+            email
+        })
     })
         .then((res) => handleResponse(res))
 }

@@ -1,12 +1,23 @@
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import CurrentUserContext from "../../context/CurrentUserContext";
 
-export default function Profile({user, onUpdateUser, logout}) {
+export default function Profile({ onUpdateUser, logout}) {
+    //подписываемся на контекст и подставляем данные имени и о себе в попап
+    const currentUser = useContext(CurrentUserContext);
 
     const [inputEditProfile, setInputEditProfile] = useState({
-        name: user.name,
-        email: user.email
+        name: currentUser.name,
+        email: currentUser.email
     })
     const [inputEdit, setInputEdit] = useState(false) // состояние disabled
+
+    console.log(inputEditProfile)
+    // После загрузки текущего пользователя из API
+    // его данные будут использованы в управляемых компонентах.
+    useEffect(() => {
+        setInputEditProfile({name: currentUser.name, email: currentUser.email});
+        console.log(currentUser)
+    }, [currentUser]);
 
     function handleEditInput(e) {
         const{name , value} = e.target;
@@ -21,7 +32,7 @@ export default function Profile({user, onUpdateUser, logout}) {
 
     return(
         <section className="profile">
-            <h2 className="profile__title">Привет, {user.name}!</h2>
+            <h2 className="profile__title">Привет, {inputEditProfile.name}!</h2>
             <form className="profile__form">
                 <label className="profile__label">Имя
                     <input
