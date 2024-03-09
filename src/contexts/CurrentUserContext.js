@@ -1,5 +1,9 @@
-import React from 'react';
+import  { createContext } from 'react';
 
-const CurrentUserContext = React.createContext();
+export const CurrentUserContext = createContext({
+    jwt: localStorage.getItem('jwt'),
+    name: createContext.name,
+    email: createContext.email
+    }
+);
 
-export default CurrentUserContext;

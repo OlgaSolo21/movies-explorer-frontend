@@ -55,17 +55,17 @@ export const getContent = (token) => { //проверка токена
         .then((res) => handleResponse(res))
 }
 
-export const editProfilePatch = (name, email) => {
+export const editProfilePatch = (data, token) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'PATCH',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-            name,
-            email
+            name: data.name,
+            email: data.email
         })
     })
         .then((res) => handleResponse(res))

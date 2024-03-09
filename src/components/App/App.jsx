@@ -1,4 +1,4 @@
-import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 import CurrentUserContext from "../../context/CurrentUserContext";
@@ -16,7 +16,6 @@ import BurgerMenuPopup from "../BurgerMenuPopup/BurgerMenuPopup";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 import * as mainApi from "../../utils/MainApi"
-import {editProfilePatch} from "../../utils/MainApi";
 
 function App() {
 // навигируем на другой роут
@@ -104,12 +103,13 @@ function App() {
 
     }
 
-    function handleUpdateProfile({name, email}) { // изменение имени/почты в аккаунте(/profile)
-        mainApi.editProfilePatch(name, email)
+    function handleUpdateProfile(data) { // изменение имени/почты в аккаунте(/profile)
+        const jwt = localStorage.getItem('jwt');
+        mainApi.editProfilePatch(data, jwt)
             .then(() => {
                 setIsInfoToolTip(true)
                 setIsSuccess(true)
-                setCurrentUser({name: currentUser.name, email: currentUser.email})
+                setCurrentUser({name: data.name, email: data.email})
                 navigate('/profile')
             })
             .catch(err => {
