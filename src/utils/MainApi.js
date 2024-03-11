@@ -55,6 +55,16 @@ export const getContent = (token) => { //проверка токена
         .then((res) => handleResponse(res))
 }
 
+// export const getUserInfo = (token) => {
+//     return fetch(`${BASE_URL}/users/me`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': `Bearer ${token}`,
+//         }
+//     })
+// }
+
 export const editProfilePatch = (data, token) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'PATCH',

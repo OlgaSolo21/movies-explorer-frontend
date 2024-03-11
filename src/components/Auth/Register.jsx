@@ -1,23 +1,16 @@
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import useFormValidation from "../../hook/useFormValidation";
 
 export default function Register({onRegister}) {
-    const [inputValue, setInputValue] = useState({
-        name: '',
-        email: '',
-        password: ''
-    })
-    const [inputError, setInputError] = useState({});
+    const {values, handleChange, errors, isValid} = useFormValidation()
 
     function handleSubmit(e) {
         e.preventDefault();
-        onRegister(inputValue);
-    }
-
-    function handleChangeInput(e) {
-        const{name , value, validationMessage} = e.target;
-        setInputValue({...inputValue, [name]: value});
-        setInputError({...inputError, [name]: validationMessage});
+        onRegister({
+            name: values.name,
+            email: values.email,
+            password: values.password
+        });
     }
 
     return (
@@ -34,11 +27,13 @@ export default function Register({onRegister}) {
                         className='auth__input'
                         name="name"
                         placeholder="Введите имя"
+                        minLength={2}
+                        maxLength={30}
                         required
-                        onChange={handleChangeInput}
-                        value={inputValue.name}
+                        onChange={handleChange}
+                        value={values.name || ""}
                     />
-                    <span className="auth__span-error">{inputError.name}</span>
+                    <span className="spanError">{errors.name}</span>
                 </label>
                 <label className="auth__label">E-mail
                     <input
@@ -47,10 +42,10 @@ export default function Register({onRegister}) {
                         type="email"
                         name="email"
                         placeholder="Введите E-mail"
-                        onChange={handleChangeInput}
-                        value={inputValue.email}
+                        onChange={handleChange}
+                        value={values.email || ""}
                     />
-                    <span className="auth__span-error">{inputError.email}</span>
+                    <span className="spanError">{errors.email}</span>
                 </label>
                 <label className="auth__label">Пароль
                     <input
@@ -61,13 +56,15 @@ export default function Register({onRegister}) {
                         placeholder="Придумайте пароль"
                         minLength={4}
                         maxLength={16}
-                        onChange={handleChangeInput}
-                        value={inputValue.password}
+                        onChange={handleChange}
+                        value={values.password || ""}
                     />
-                    <span className="auth__span-error">{inputError.password}</span>
+                    <span className="spanError">{errors.password}</span>
                 </label>
                 <button type="submit"
-                        className="auth__button auth__button_register link">Зарегистрироваться</button>
+                        className="auth__button auth__button_register link"
+                        disabled={!isValid}
+                >Зарегистрироваться</button>
             </form>
             <p className='auth__subtitle'>Уже зарегистрированы?&ensp;
                 <Link to='/signin' className='link-nav link'>Войти</Link></p>

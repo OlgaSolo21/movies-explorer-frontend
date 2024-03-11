@@ -1,24 +1,17 @@
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import useFormValidation from "../../hook/useFormValidation";
 
 export default function Login({onLogin}) {
-    const [inputValue, setInputValue] = useState({
-        email: '',
-        password: ''
-    })
-    const [inputError, setInputError] = useState({});
+    const {values, handleChange, errors, isValid} = useFormValidation()
 
     function handleSubmit(e) {
         e.preventDefault();
-        onLogin(inputValue);
-        console.log(inputValue)
+        onLogin({
+            email: values.email,
+            password: values.password
+        });
     }
 
-    function handleChangeInput(e) {
-        const{name , value, validationMessage} = e.target;
-        setInputValue({...inputValue, [name]: value});
-        setInputError({...inputError, [name]: validationMessage});
-    }
     return(
         <section className='auth'>
             <div className="auth__head">
@@ -34,10 +27,10 @@ export default function Login({onLogin}) {
                         type="email"
                         name="email"
                         placeholder="Введите E-mail"
-                        onChange={handleChangeInput}
-                        value={inputValue.email}
+                        onChange={handleChange}
+                        value={values.email || ""}
                     />
-                    <span className="auth__span-error">{inputError.email}</span>
+                    <span className="spanError">{errors.email}</span>
                 </label>
                 <label className="auth__label">Пароль
                     <input
@@ -48,13 +41,15 @@ export default function Login({onLogin}) {
                         placeholder="Придумайте пароль"
                         minLength={4}
                         maxLength={16}
-                        onChange={handleChangeInput}
-                        value={inputValue.password}
+                        onChange={handleChange}
+                        value={values.password || ""}
                     />
-                    <span className="auth__span-error">{inputError.password}</span>
+                    <span className="spanError">{errors.password}</span>
                 </label>
                 <button type="submit"
-                        className="auth__button auth__button_login link">Войти</button>
+                        className="auth__button auth__button_login link"
+                        disabled={!isValid}
+                >Войти</button>
             </form>
             <p className='auth__subtitle'>Еще не зарегистрированы?&ensp;
                 <Link to='/signup' className='link-nav link'>Регистрация</Link></p>

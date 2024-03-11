@@ -16,6 +16,7 @@ import BurgerMenuPopup from "../BurgerMenuPopup/BurgerMenuPopup";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 import * as mainApi from "../../utils/MainApi"
+import {getUserInfo} from "../../utils/MainApi";
 
 function App() {
 // навигируем на другой роут
@@ -27,7 +28,10 @@ function App() {
 // состояние загрузки
     const [isLoading, setIsLoading] = useState(false)
 //успешной аутентификации (меняем текст и картинку в попапе InfoTooltip)
-    const [isSuccess, setIsSuccess] = useState(false)
+    const [isSuccess, setIsSuccess] = useState({
+        message: "",
+        success: false
+    })
 //переменная попапа уведомления InfoTooltip
     const [isInfoToolTip, setIsInfoToolTip] = useState(false)
 // стейт currentUser в корневом компоненте чтобы данные о текущем пользователе были видны во всех местах
@@ -41,29 +45,13 @@ function App() {
     useEffect(() => {
         const jwt = localStorage.getItem('jwt');
         if (jwt) {
-            // setIsLoading(false);
             mainApi.getContent(jwt)
                 .then(() => {
                     setIsLoggedIn(true)
                 })
                 .catch(console.error)
         }
-        // else {
-        //     setIsLoading(true);
-        // }
     }, [])
-
-    // монтирование данных на странице
-    useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
-        if (jwt && isLoggedIn) {
-            mainApi.getContent(jwt)
-                .then((data) => {
-                    setCurrentUser(data)
-                })
-                .catch(console.error)
-        }
-    }, [isLoggedIn])
 
     function handleRegister({name, email, password}) { //направляем после регистрации
         mainApi.register(name, email, password)
@@ -71,15 +59,20 @@ function App() {
                if (res) {
                    setIsLoggedIn(true)
                    setIsInfoToolTip(true)
-                   setIsSuccess(true)
-                   navigate('/signin', {replace: true})
-                   // handleLogin({email, password})
+                   setIsSuccess({
+                       message: "Успешная регистрация",
+                       success: true
+                   })
+                   handleLogin({email, password})
                }
             })
             .catch(err => {
                 setIsLoggedIn(false)
                 setIsInfoToolTip(true)
-                setIsSuccess(false)
+                setIsSuccess({
+                    message: "Ошибка регистрации",
+                    success: false
+                })
                 console.log(err)
             })
 
@@ -87,18 +80,25 @@ function App() {
 
     function handleLogin({email, password}) { // направляем после логина-входа
         mainApi.login(email, password)
-            .then(res => {
-                localStorage.setItem('jwt', res.token)
-                setIsLoggedIn(true)
-                setIsInfoToolTip(true)
-                setIsSuccess(true)
-                navigate("/movies", {replace: true});
+            .then((res) => {
+                if (res) {
+                    localStorage.setItem('jwt', res.token)
+                    setIsLoggedIn(true)
+                    setIsInfoToolTip(true)
+                    setIsSuccess({
+                        message: "Успешный вход",
+                        success: true
+                    })
+                    navigate("/movies", {replace: true});
+                }
             })
             .catch(err => {
                 setIsLoggedIn(false)
                 setIsInfoToolTip(true)
-                setIsSuccess(false)
-                console.log(err)
+                setIsSuccess({
+                    message: "Проверьте введенные данные",
+                    success: false
+                })
             })
 
     }
@@ -108,15 +108,20 @@ function App() {
         mainApi.editProfilePatch(data, jwt)
             .then(() => {
                 setIsInfoToolTip(true)
-                setIsSuccess(true)
+                setIsSuccess({
+                    message: "Данные успешно изменены",
+                    success: true
+                })
                 setCurrentUser({name: data.name, email: data.email})
                 navigate('/profile')
             })
             .catch(err => {
                 setIsLoggedIn(false)
                 setIsInfoToolTip(true)
-                setIsSuccess(false)
-                console.log(err)
+                setIsSuccess({
+                    message: "При обновлении профиля произошла ошибка",
+                    success: false
+                })
             })
     }
 
@@ -134,6 +139,18 @@ function App() {
         setIsBurgerMenu(false)
         setIsInfoToolTip(false)
     }
+
+    // монтирование данных на странице
+    useEffect(() => {
+        const jwt = localStorage.getItem('jwt');
+        if (jwt && isLoggedIn) {
+            mainApi.getContent(jwt)
+                .then((data) => {
+                    setCurrentUser({name: data.name, email: data.email})
+                })
+                .catch(console.error)
+        }
+    }, [isLoggedIn])
 
     return (
       <CurrentUserContext.Provider value={ currentUser }>
@@ -166,9 +183,10 @@ function App() {
           />
 
           <InfoTooltip
-              isSuccess={ isSuccess }
+              isSuccess={isSuccess.success}
               isOpen={ isInfoToolTip }
               onClose={ handleClosePopup }
+              message={isSuccess.message}
           />
       </CurrentUserContext.Provider>
   )
