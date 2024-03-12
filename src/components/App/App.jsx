@@ -16,7 +16,8 @@ import BurgerMenuPopup from "../BurgerMenuPopup/BurgerMenuPopup";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 import * as mainApi from "../../utils/MainApi"
-import {getUserInfo} from "../../utils/MainApi";
+import ProtectedRoute from "../../context/ProtectedRoute";
+import {getSavedMovies} from "../../utils/MainApi";
 
 function App() {
 // навигируем на другой роут
@@ -38,32 +39,19 @@ function App() {
     const [currentUser, setCurrentUser] = useState({})
 
     // временные переменные
-    const [movies, setMovies] = useState(constantFilm) // временное решение для карточек с фильмами
-    const [savedMovies, setSavedMovies] = useState(constantFilm.slice(0, 3))
+    // const [movies, setMovies] = useState(constantFilm) // временное решение для карточек с фильмами
+    const [savedMovies, setSavedMovies] = useState([])
 
-    //проверка токена
-    useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
-        if (jwt) {
-            mainApi.getContent(jwt)
-                .then(() => {
-                    setIsLoggedIn(true)
-                })
-                .catch(console.error)
-        }
-    }, [])
-
-    function handleRegister({name, email, password}) { //направляем после регистрации
-        mainApi.register(name, email, password)
+    function handleRegister(data) { //направляем после регистрации
+        mainApi.register(data)
             .then(res => {
                if (res) {
-                   setIsLoggedIn(true)
                    setIsInfoToolTip(true)
                    setIsSuccess({
                        message: "Успешная регистрация",
                        success: true
                    })
-                   handleLogin({email, password})
+                   navigate('/signin', { replace: true });
                }
             })
             .catch(err => {
@@ -78,10 +66,10 @@ function App() {
 
     }
 
-    function handleLogin({email, password}) { // направляем после логина-входа
-        mainApi.login(email, password)
+    function handleLogin(data) { // направляем после логина-входа
+        mainApi.login(data)
             .then((res) => {
-                if (res) {
+                if (res && res.token) {
                     localStorage.setItem('jwt', res.token)
                     setIsLoggedIn(true)
                     setIsInfoToolTip(true)
@@ -92,7 +80,7 @@ function App() {
                     navigate("/movies", {replace: true});
                 }
             })
-            .catch(err => {
+            .catch(() => {
                 setIsLoggedIn(false)
                 setIsInfoToolTip(true)
                 setIsSuccess({
@@ -103,17 +91,48 @@ function App() {
 
     }
 
+    function handleCheckToken() { // функция для проверки токена(тест)
+        if (localStorage.getItem("jwt")) {// без условия me сразу требует авторизации(решить)
+            const jwt = localStorage.getItem('jwt');
+            mainApi.checkToken(jwt)
+                .then(() => {
+                    setIsLoggedIn(true)
+                    navigate("/movies", {replace: true});
+                })
+                .catch(() => {
+                    setIsLoggedIn(false)
+                })
+        }
+    }
+
+    useEffect(() => { // монтирование на проверку токена(тест)
+        handleCheckToken()
+    }, [isLoggedIn]);
+
+    useEffect(() => { // монтирует данные юзера в профиль
+        if (isLoggedIn) {
+            mainApi.getUserInfo()
+                .then((data) => {
+                    setCurrentUser(data)
+                })
+                .catch(console.error)
+            // mainApi.getSavedMovies()
+            //     .then((moviesList) => {
+            //         setSavedMovies(moviesList.reverse)
+            //     })
+            //     .catch(console.error)
+        }
+    }, [isLoggedIn]);
+
     function handleUpdateProfile(data) { // изменение имени/почты в аккаунте(/profile)
-        const jwt = localStorage.getItem('jwt');
-        mainApi.editProfilePatch(data, jwt)
-            .then(() => {
+        mainApi.editProfilePatch(data)
+            .then((newValue) => {
                 setIsInfoToolTip(true)
                 setIsSuccess({
                     message: "Данные успешно изменены",
                     success: true
                 })
-                setCurrentUser({name: data.name, email: data.email})
-                navigate('/profile')
+                setCurrentUser(newValue)
             })
             .catch(err => {
                 setIsLoggedIn(false)
@@ -126,6 +145,7 @@ function App() {
     }
 
     function handleLogOut() {
+        localStorage.clear()
         setIsLoggedIn(false)
         localStorage.removeItem('jwt')
         navigate('/')
@@ -140,17 +160,17 @@ function App() {
         setIsInfoToolTip(false)
     }
 
-    // монтирование данных на странице
-    useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
-        if (jwt && isLoggedIn) {
-            mainApi.getContent(jwt)
-                .then((data) => {
-                    setCurrentUser({name: data.name, email: data.email})
-                })
-                .catch(console.error)
-        }
-    }, [isLoggedIn])
+    // // монтирование данных на странице
+    // useEffect(() => {
+    //     const jwt = localStorage.getItem('jwt');
+    //     if (jwt && isLoggedIn) {
+    //         mainApi.getContent(jwt)
+    //             .then((currentUser) => {
+    //                 setCurrentUser(currentUser)
+    //             })
+    //             .catch(console.error)
+    //     }
+    // }, [isLoggedIn])
 
     return (
       <CurrentUserContext.Provider value={ currentUser }>
@@ -164,13 +184,25 @@ function App() {
               <Route path="/signin"
                      element={<Login onLogin={handleLogin}/>}/>
               <Route path="/profile"
-                     element={ <Profile
-                  onUpdateUser={handleUpdateProfile}
-                  logout={handleLogOut}/>}/>
+                     element={
+                  <ProtectedRoute loggedIn={isLoggedIn}>
+                      <Profile
+                         onUpdateUser={handleUpdateProfile}
+                         logout={handleLogOut}/>
+                  </ProtectedRoute>}/>
               <Route path="/movies"
-                     element={<Movies moviesList={movies} isLoading={isLoading}/>}/>
+                     element={
+                  <ProtectedRoute loggedIn={isLoggedIn}>
+                      <Movies
+                          moviesList={savedMovies}
+                          isLoading={isLoading}/>
+                  </ProtectedRoute>}/>
               <Route path="/saved-movies"
-                     element={<SavedMovies moviesList={savedMovies}/>}/>
+                     element={
+                  <ProtectedRoute loggedIn={isLoggedIn}>
+                      <SavedMovies
+                          moviesList={savedMovies}/>
+                  </ProtectedRoute>}/>
               <Route path="*"
                      element={<NotFound/>} />
           </Routes>

@@ -6,16 +6,15 @@ export default function Profile({ onUpdateUser, logout}) {
     //подписываемся на контекст и подставляем данные имени и о себе в попап
     const currentUser = useContext(CurrentUserContext);
 
-    const {values, handleChange, errors, isValid, setValues} = useFormValidation()
+    const {values, handleChange, errors, isValid, resetForm} = useFormValidation()
 
     const [inputEdit, setInputEdit] = useState(false) // состояние disabled
 
     useEffect(() => {
-        setValues({
-            name: currentUser.name,
-            email: currentUser.email,
-        })
-    }, [setValues, currentUser]);
+        if (currentUser) {
+            resetForm(currentUser);
+        }
+    }, [currentUser, resetForm]);
 
     function handleSaveEdit(e) {
         e.preventDefault()
