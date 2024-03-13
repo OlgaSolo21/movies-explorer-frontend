@@ -11,13 +11,14 @@ import Login from "../Auth/Login";
 import Profile from "../Profile/Profile";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
-import constantFilm from "../../utils/constantFilm";
 import BurgerMenuPopup from "../BurgerMenuPopup/BurgerMenuPopup";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 import * as mainApi from "../../utils/MainApi"
 import ProtectedRoute from "../../context/ProtectedRoute";
-import {getSavedMovies} from "../../utils/MainApi";
+
+import * as moviesApi from "../../utils/MoviesApi"
+
 
 function App() {
 // навигируем на другой роут
@@ -116,11 +117,16 @@ function App() {
                     setCurrentUser(data)
                 })
                 .catch(console.error)
-            // mainApi.getSavedMovies()
+            // moviesApi.getMovies()
             //     .then((moviesList) => {
             //         setSavedMovies(moviesList.reverse)
             //     })
             //     .catch(console.error)
+            mainApi.getSavedMovies()
+                .then((moviesList) => {
+                    setSavedMovies(moviesList.reverse)
+                })
+                .catch(console.error)
         }
     }, [isLoggedIn]);
 
@@ -194,7 +200,7 @@ function App() {
                      element={
                   <ProtectedRoute loggedIn={isLoggedIn}>
                       <Movies
-                          moviesList={savedMovies}
+                          savedMovies={savedMovies}
                           isLoading={isLoading}/>
                   </ProtectedRoute>}/>
               <Route path="/saved-movies"
