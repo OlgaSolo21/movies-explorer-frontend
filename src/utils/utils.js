@@ -7,3 +7,18 @@
 //     });
 //     return moviesByQuery;
 // }
+
+export function filterSearchMovie(data, isSearch) {
+    const moviesResult =
+        data.filter((f) => {
+            const searchName =
+            f.nameRU.toLowerCase().includes(isSearch.toLowerCase()) ||
+            f.nameEN.toLowerCase().includes(isSearch.toLowerCase())
+        return searchName
+        // const nameRU = f.nameRU.toLowerCase();
+        // const nameEN = f.nameEN.toLowerCase();
+        // const query = movieSearch.toLowerCase()
+        // return nameRU.indexOf(query) || nameEN.indexOf(query)
+    })
+    return moviesResult
+}

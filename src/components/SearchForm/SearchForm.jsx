@@ -14,12 +14,12 @@ export default function SearchForm({findMovies, allMovies}) {
         e.preventDefault()
         findMovies(isSearch)
         if (isSearch) {//при сабмите устанавливаем значение данных
-            localStorage.setItem("searchFindMovies", isSearch)
+            localStorage.setItem("searchMovies", isSearch)
         }
     }
 
     useEffect(() => {
-        const findMovies = localStorage.getItem("searchFindMovies")
+        const findMovies = localStorage.getItem("searchMovies")
         if (findMovies) {
             setIsSearch(findMovies)
         }
@@ -33,7 +33,7 @@ export default function SearchForm({findMovies, allMovies}) {
                     name="search"
                     className="search__input"
                     placeholder="Фильм"
-                    required
+                    // required
                     value={isSearch || ''}
                     onChange={handleChangeInput}
                 />

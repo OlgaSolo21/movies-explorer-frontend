@@ -92,23 +92,38 @@ function App() {
 
     }
 
-    function handleCheckToken() { // функция для проверки токена(тест)
-        if (localStorage.getItem("jwt")) {// без условия me сразу требует авторизации(решить)
-            const jwt = localStorage.getItem('jwt');
-            mainApi.checkToken(jwt)
-                .then(() => {
-                    setIsLoggedIn(true)
-                    navigate("/movies", {replace: true});
-                })
-                .catch(() => {
-                    setIsLoggedIn(false)
-                })
-        }
-    }
+    // function handleCheckToken() { // функция для проверки токена(тест)
+    //     if (localStorage.getItem("jwt")) {// без условия me сразу требует авторизации(решить)
+    //         const jwt = localStorage.getItem('jwt');
+    //         mainApi.checkToken(jwt)
+    //             .then(() => {
+    //                 setIsLoggedIn(true)
+    //                 navigate("/movies", {replace: true});
+    //             })
+    //             .catch(() => {
+    //                 setIsLoggedIn(false)
+    //             })
+    //     }
+    // }
 
-    useEffect(() => { // монтирование на проверку токена(тест)
-        handleCheckToken()
-    }, [isLoggedIn]);
+    useEffect(() => {
+        const jwt = localStorage.getItem('jwt');
+        if (jwt) {
+            mainApi.checkToken(jwt)
+                .then((res) => {
+                    if (res) {
+                        localStorage.removeItem('firstEnterMovies')
+                        setIsLoggedIn(true)
+                        navigate("/movies", {replace: true});
+                    }
+                })
+                .catch(console.error)
+        }
+    }, []);
+
+    // useEffect(() => { // монтирование на проверку токена(тест)
+    //     handleCheckToken()
+    // }, [isLoggedIn]);
 
     useEffect(() => { // монтирует данные юзера в профиль
         if (isLoggedIn) {
@@ -123,8 +138,8 @@ function App() {
             //     })
             //     .catch(console.error)
             mainApi.getSavedMovies()
-                .then((savedMovies) => {
-                    setSavedMovies(savedMovies)
+                .then((data) => {
+                    setSavedMovies(data.reverse())
                 })
                 .catch(console.error)
         }
@@ -154,6 +169,7 @@ function App() {
         localStorage.clear()
         setIsLoggedIn(false)
         localStorage.removeItem('jwt')
+        localStorage.removeItem('firstEnterMovies')
         navigate('/')
     }
 

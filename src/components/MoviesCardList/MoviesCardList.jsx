@@ -18,6 +18,7 @@ export default function MoviesCardList({isLoading, moviesAll, savedMovies}) { //
                     <ul className="movie__list">
                         {moviesAll.slice(0, countMovies).map((m) => (
                             <MoviesCard
+                                savedMovies={savedMovies}
                                 movie={m}
                                 key={m.id}
                             />
