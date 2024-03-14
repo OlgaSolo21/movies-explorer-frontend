@@ -1,5 +1,4 @@
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import useFormValidation from "../../hook/useFormValidation";
 import {useEffect, useState} from "react";
 
 export default function SearchForm({findMovies, allMovies}) {

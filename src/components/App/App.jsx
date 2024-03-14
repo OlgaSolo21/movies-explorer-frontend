@@ -123,8 +123,8 @@ function App() {
             //     })
             //     .catch(console.error)
             mainApi.getSavedMovies()
-                .then((moviesList) => {
-                    setSavedMovies(moviesList.reverse)
+                .then((savedMovies) => {
+                    setSavedMovies(savedMovies)
                 })
                 .catch(console.error)
         }

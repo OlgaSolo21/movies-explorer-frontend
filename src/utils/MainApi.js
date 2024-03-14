@@ -1,4 +1,4 @@
-import {BASE_URL} from "./constans";
+import {BASE_URL, MOVIES_URL} from "./constans";
 
 const handleResponse = (res) => {
     if (res.ok) {
@@ -100,9 +100,9 @@ export const postCard = (data) => {
             duration: data.duration,
             year: data.year,
             description: data.description,
-            image: 'https://api.nomoreparties.co' + data.image.url,
+            image: `${MOVIES_URL}${data.image.url}`,
             trailerLink: data.trailerLink,
-            thumbnail: 'https://api.nomoreparties.co' + data.image.formats.thumbnail.url,
+            thumbnail: `${MOVIES_URL}${data.image.formats.thumbnail}`,
             movieId: data.id,
             nameRU: data.nameRU,
             nameEN: data.nameEN,

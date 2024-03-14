@@ -3,7 +3,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import {useState} from "react";
 import Preloader from "../Preloader/Preloader";
 
-export default function MoviesCardList({isLoading, savedMovies}) { //РЕНДЕР ВСЕХ КАРТОЧЕК НА СТРАНИЦУ
+export default function MoviesCardList({isLoading, moviesAll, savedMovies}) { //РЕНДЕР ВСЕХ КАРТОЧЕК НА СТРАНИЦУ
 
     const [countMovies, setCountMovies] = useState(6)
 
@@ -16,13 +16,14 @@ export default function MoviesCardList({isLoading, savedMovies}) { //РЕНДЕ�
             {isLoading ? <Preloader/> : (
                 <>
                     <ul className="movie__list">
-                        {savedMovies.slice(0, countMovies).map((movie) => (
+                        {moviesAll.slice(0, countMovies).map((m) => (
                             <MoviesCard
-                                savedMovies={savedMovies}
-                                key={movie.id}/>
+                                movie={m}
+                                key={m.id}
+                            />
                         ))}
                     </ul>
-                    {countMovies < savedMovies.length ? (
+                    {countMovies < moviesAll.length ? (
                         <ButtonMore handleMoreLoad={loadMore}/>) : null}
                 </>
             )}
