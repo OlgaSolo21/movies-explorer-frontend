@@ -3,6 +3,8 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import {useEffect, useState} from "react";
 import Preloader from "../Preloader/Preloader";
 import AlertSearch from "../AlertSearch/AlertSearch";
+import {INIT_VISIBLE_MOVIES, STEP_VISIBLE_MOVIES, WIDTH_SCREEN_MOVIES} from "../../utils/constans";
+import lodash from "lodash";
 
 export default function MoviesCardList(
     {isLoading, moviesAll, savedMovies,
@@ -11,36 +13,36 @@ export default function MoviesCardList(
     const [countMovies, setCountMovies] = useState(0)
 
     useEffect(() => {
-        const visibleMovieList = () => {
+        function visibleMovieList() {
             const screenWidth = window.innerWidth;
-            if (screenWidth >= 1279) {
-                setCountMovies(12);
-            } else if (screenWidth >= 767) {
-                setCountMovies(8);
-            } else if (screenWidth >= 320) {
-                setCountMovies(5);
+            let loadInRow;
+            if (screenWidth <= WIDTH_SCREEN_MOVIES.MOBILE) {
+                loadInRow = INIT_VISIBLE_MOVIES.MOBILE;
+            } else if (screenWidth <= WIDTH_SCREEN_MOVIES.TAB) {
+                loadInRow = INIT_VISIBLE_MOVIES.TAB;
+            } else if (screenWidth <= WIDTH_SCREEN_MOVIES.LAPTOP) {
+                loadInRow = INIT_VISIBLE_MOVIES.LAPTOP;
             }
-        };
+            setCountMovies(loadInRow)
+        }
 
-        visibleMovieList();
-        // window.addEventListener("resize", visibleMovieList);
-
+        const visibleMovieListDebounced = lodash.debounce(visibleMovieList, 1000);
+        visibleMovieListDebounced();
+        window.addEventListener('resize', visibleMovieListDebounced);
         return () => {
-            window.removeEventListener("resize", visibleMovieList);
-        };
-    }, []);
+            window.removeEventListener('resize', visibleMovieList);
+        }
+    }, [])
 
     function loadMore() {//загрузка фильмов на кнопку "еще"
         const screenWidth = window.innerWidth;
-        if (screenWidth >= 1279) {
-            setCountMovies(countMovies + 4);
-        } else if (screenWidth >= 767) {
-            setCountMovies(countMovies + 3);
-        } else if (screenWidth >= 319) {
-            setCountMovies(countMovies + 2);
+        if (screenWidth <= WIDTH_SCREEN_MOVIES.MOBILE) {
+            setCountMovies(step => step + STEP_VISIBLE_MOVIES.MOBILE);
+        } else if (screenWidth <= WIDTH_SCREEN_MOVIES.TAB) {
+            setCountMovies(step => step + STEP_VISIBLE_MOVIES.TAB);
+        } else if (screenWidth <= WIDTH_SCREEN_MOVIES.LAPTOP) {
+            setCountMovies(step => step + STEP_VISIBLE_MOVIES.LAPTOP);
         }
-        // const loadMoreItem = countMovies + visibleList().step
-        // setCountMovies(loadMoreItem);
     }
 
     return (
