@@ -1,8 +1,9 @@
 import {Link} from "react-router-dom";
 import useFormValidation from "../../hook/useFormValidation";
+import {EMAIL_REGEX} from "../../utils/constans";
 
 export default function Login({onLogin}) {
-    const {values, handleChange, errors, isValid} = useFormValidation()
+    const {values, handleChange, errors, isValid, isInputValid} = useFormValidation()
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -19,7 +20,9 @@ export default function Login({onLogin}) {
                 <h1 className="auth__title">Рады видеть!</h1>
             </div>
             <form className='auth__form'
-                  onSubmit={handleSubmit}>
+                  onSubmit={handleSubmit}
+                  id="form"
+                  noValidate>
                 <label className="auth__label">E-mail
                     <input
                         required
@@ -29,8 +32,9 @@ export default function Login({onLogin}) {
                         placeholder="Введите E-mail"
                         onChange={handleChange}
                         value={values.email || ""}
+                        // pattern={EMAIL_REGEX}
                     />
-                    <span className="spanError">{errors.email}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.email}</span>
                 </label>
                 <label className="auth__label">Пароль
                     <input
@@ -44,7 +48,7 @@ export default function Login({onLogin}) {
                         onChange={handleChange}
                         value={values.password || ""}
                     />
-                    <span className="spanError">{errors.password}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.password}</span>
                 </label>
                 <button type="submit"
                         className="auth__button auth__button_login link"

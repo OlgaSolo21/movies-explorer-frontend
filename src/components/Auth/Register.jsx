@@ -1,8 +1,9 @@
 import {Link} from "react-router-dom";
 import useFormValidation from "../../hook/useFormValidation";
+import {EMAIL_REGEX, NAME_REGEX} from "../../utils/constans";
 
 export default function Register({onRegister}) {
-    const {values, handleChange, errors, isValid} = useFormValidation()
+    const {values, handleChange, errors, isValid, isInputValid} = useFormValidation()
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -20,11 +21,14 @@ export default function Register({onRegister}) {
                 <h1 className="auth__title">Добро пожаловать!</h1>
             </div>
             <form className='auth__form'
-                  onSubmit={handleSubmit}>
+                  onSubmit={handleSubmit}
+                  id="form"
+                  noValidate>
                 <label className="auth__label">Имя
                     <input
                         type="text"
                         className='auth__input'
+                        //className={`${!isInputValid ? "auth__input" : '' }`}
                         name="name"
                         placeholder="Введите имя"
                         minLength={2}
@@ -32,8 +36,9 @@ export default function Register({onRegister}) {
                         required
                         onChange={handleChange}
                         value={values.name || ""}
+                        // pattern={NAME_REGEX}
                     />
-                    <span className="spanError">{errors.name}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.name}</span>
                 </label>
                 <label className="auth__label">E-mail
                     <input
@@ -44,8 +49,9 @@ export default function Register({onRegister}) {
                         placeholder="Введите E-mail"
                         onChange={handleChange}
                         value={values.email || ""}
+                        // pattern={EMAIL_REGEX}
                     />
-                    <span className="spanError">{errors.email}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.email}</span>
                 </label>
                 <label className="auth__label">Пароль
                     <input
@@ -59,7 +65,7 @@ export default function Register({onRegister}) {
                         onChange={handleChange}
                         value={values.password || ""}
                     />
-                    <span className="spanError">{errors.password}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.password}</span>
                 </label>
                 <button type="submit"
                         className="auth__button auth__button_register link"

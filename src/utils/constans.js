@@ -1,7 +1,10 @@
-const isEmail = (email) => {
+const EMAIL_REGEX = (email) => {
     return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email);}
-const regName = (email) => {
+const NAME_REGEX = (email) => {
     return /^[а-яА-ЯёЁa-zA-Z\s-]+$/img.test(email);}
+
+// const EMAIL_REGEX = "^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?.)*(aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$";
+// const NAME_REGEX = "^[а-яА-ЯёЁa-zA-Z\\s-]+$"
 
 const BASE_URL = 'https://api.movies-diploma77.nomoredomainswork.ru';
 const MOVIES_URL = 'https://api.nomoreparties.co';
@@ -27,8 +30,8 @@ const WIDTH_SCREEN_MOVIES = { // px
 }
 
 module.exports = {
-    regName,
-    isEmail,
+    NAME_REGEX,
+    EMAIL_REGEX,
     BASE_URL,
     MOVIES_URL,
     INIT_VISIBLE_MOVIES,

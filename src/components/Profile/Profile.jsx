@@ -1,12 +1,13 @@
 import {useContext, useEffect, useState} from "react";
 import CurrentUserContext from "../../context/CurrentUserContext";
 import useFormValidation from "../../hook/useFormValidation"
+import {EMAIL_REGEX, NAME_REGEX} from "../../utils/constans";
 
 export default function Profile({ onUpdateUser, logout}) {
     //подписываемся на контекст и подставляем данные имени и о себе в попап
     const currentUser = useContext(CurrentUserContext);
 
-    const {values, handleChange, errors, isValid, resetForm} = useFormValidation()
+    const {values, handleChange, errors, isValid, resetForm, isInputValid} = useFormValidation()
 
     const [inputEdit, setInputEdit] = useState(false) // состояние disabled
 
@@ -28,7 +29,9 @@ export default function Profile({ onUpdateUser, logout}) {
     return(
         <section className="profile">
             <h2 className="profile__title">Привет, {currentUser.name}!</h2>
-            <form className="profile__form">
+            <form className="profile__form"
+                  id="form"
+                  noValidate>
                 <label className="profile__label">Имя
                     <input
                         type="text"
@@ -40,9 +43,10 @@ export default function Profile({ onUpdateUser, logout}) {
                         value={values.name || ""}
                         onChange={handleChange}
                         disabled={!inputEdit}
+                        // pattern={NAME_REGEX}
                     />
                 </label>
-                <span className="spanError">{errors.name}</span>
+                <span className={`${isInputValid ? "spanError" : '' }`}>{errors.name}</span>
                 <label className="profile__label" >E-mail
                     <input
                         className='profile__input'
@@ -53,9 +57,10 @@ export default function Profile({ onUpdateUser, logout}) {
                         onChange={handleChange}
                         value={values.email || ""}
                         disabled={!inputEdit}
+                        // pattern={EMAIL_REGEX}
                     />
                 </label>
-                <span className="spanError">{errors.email}</span>
+                <span className={`${isInputValid ? "spanError" : '' }`}>{errors.email}</span>
             </form>
             {!inputEdit ? (
                 <div className="profile__btn">
