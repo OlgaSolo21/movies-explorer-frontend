@@ -24,7 +24,7 @@ export default function Movies({savedMovies, addMovie}) { // РОУТ movies - "
 
     function handleFindMovies(search) {//сабмит поиска формы
         localStorage.setItem("searchMovies", search)
-        localStorage.setItem('shortsCheckbox', JSON.stringify(isCheckbox))
+        localStorage.setItem('shortsCheckbox', isCheckbox)
         if (localStorage.getItem('firstEnterMovies')) {
             const storageFirstEnter = JSON.parse(localStorage.getItem('firstEnterMovies'))
             filterMovieFind(storageFirstEnter, search, isCheckbox)
@@ -57,6 +57,7 @@ export default function Movies({savedMovies, addMovie}) { // РОУТ movies - "
         } else {
             setMoviesFilterCheck(moviesAll)
         }
+        localStorage.setItem('shortsCheckbox', !isCheckbox)
     }
 
     useEffect(() => {
