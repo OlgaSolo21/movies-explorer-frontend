@@ -86,8 +86,8 @@ export const getSavedMovies = () => { // монтирование найденн
         .then((res) => handleResponse(res))
 }
 
-// метод добавления новой карточки на сервер
-export const postCard = (data) => {
+
+export const addMovie = (data) => { // добавление фильма в свои локально
     return fetch(`${BASE_URL}/movies`, {
         method: 'POST',
         headers: {
@@ -102,7 +102,7 @@ export const postCard = (data) => {
             description: data.description,
             image: `${MOVIES_URL}${data.image.url}`,
             trailerLink: data.trailerLink,
-            thumbnail: `${MOVIES_URL}${data.image.formats.thumbnail}`,
+            thumbnail: `${MOVIES_URL}${data.image.formats.thumbnail.url}`,
             movieId: data.id,
             nameRU: data.nameRU,
             nameEN: data.nameEN,
@@ -110,3 +110,16 @@ export const postCard = (data) => {
     })
         .then((res) => handleResponse(res))
 };
+
+export const deleteMovie = (cardId) => { // удаление фильма из свои локально
+    return fetch(`${BASE_URL}/movies/${cardId}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => handleResponse(res))
+}
+
+

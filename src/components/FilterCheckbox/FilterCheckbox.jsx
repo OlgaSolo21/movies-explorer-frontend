@@ -1,14 +1,5 @@
-import {useState} from "react";
-
-export default function FilterCheckbox() {
-    const [checkBox, setCheckBox] = useState(true)
-
-    const checkBoxToggleClassName = `checkbox__label ${checkBox ? "checkbox__label_inactive" : "checkbox__label_active"}`
-    function toggleCheckBox(e) {
-        e.preventDefault()
-        setCheckBox(!checkBox)
-    }
-
+export default function FilterCheckbox({toggleCheckBox, isCheckbox}) {
+    const checkBoxToggleClassName = `checkbox__label ${!isCheckbox ? "checkbox__label_inactive" : "checkbox__label_active"}`
     return (
         <div className="checkbox">
             <button

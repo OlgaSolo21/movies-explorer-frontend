@@ -17,9 +17,6 @@ import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import * as mainApi from "../../utils/MainApi"
 import ProtectedRoute from "../../context/ProtectedRoute";
 
-import * as moviesApi from "../../utils/MoviesApi"
-
-
 function App() {
 // навигируем на другой роут
     const navigate = useNavigate()
@@ -27,8 +24,7 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 // бургер меню на 768 и 320
     const [isBurgerMenu, setIsBurgerMenu] = useState(false)
-// состояние загрузки
-    const [isLoading, setIsLoading] = useState(false)
+
 //успешной аутентификации (меняем текст и картинку в попапе InfoTooltip)
     const [isSuccess, setIsSuccess] = useState({
         message: "",
@@ -52,7 +48,8 @@ function App() {
                        message: "Успешная регистрация",
                        success: true
                    })
-                   navigate('/signin', { replace: true });
+                   handleLogin(data)
+                   // navigate('/signin', { replace: true });
                }
             })
             .catch(err => {
@@ -92,20 +89,6 @@ function App() {
 
     }
 
-    // function handleCheckToken() { // функция для проверки токена(тест)
-    //     if (localStorage.getItem("jwt")) {// без условия me сразу требует авторизации(решить)
-    //         const jwt = localStorage.getItem('jwt');
-    //         mainApi.checkToken(jwt)
-    //             .then(() => {
-    //                 setIsLoggedIn(true)
-    //                 navigate("/movies", {replace: true});
-    //             })
-    //             .catch(() => {
-    //                 setIsLoggedIn(false)
-    //             })
-    //     }
-    // }
-
     useEffect(() => {
         const jwt = localStorage.getItem('jwt');
         if (jwt) {
@@ -121,10 +104,6 @@ function App() {
         }
     }, []);
 
-    // useEffect(() => { // монтирование на проверку токена(тест)
-    //     handleCheckToken()
-    // }, [isLoggedIn]);
-
     useEffect(() => { // монтирует данные юзера в профиль
         if (isLoggedIn) {
             mainApi.getUserInfo()
@@ -132,14 +111,9 @@ function App() {
                     setCurrentUser(data)
                 })
                 .catch(console.error)
-            // moviesApi.getMovies()
-            //     .then((moviesList) => {
-            //         setSavedMovies(moviesList.reverse)
-            //     })
-            //     .catch(console.error)
             mainApi.getSavedMovies()
                 .then((data) => {
-                    setSavedMovies(data.reverse())
+                    setSavedMovies(data)
                 })
                 .catch(console.error)
         }
@@ -154,6 +128,36 @@ function App() {
                     success: true
                 })
                 setCurrentUser(newValue)
+            })
+            .catch(err => {
+                setIsLoggedIn(false)
+                setIsInfoToolTip(true)
+                setIsSuccess({
+                    message: "При обновлении профиля произошла ошибка",
+                    success: false
+                })
+            })
+    }
+
+    function addMovie (data) {
+        mainApi.addMovie(data)
+            .then((save) => {
+                setSavedMovies([save, ...savedMovies])
+            })
+            .catch(err => {
+                setIsLoggedIn(false)
+                setIsInfoToolTip(true)
+                setIsSuccess({
+                    message: "При обновлении профиля произошла ошибка",
+                    success: false
+                })
+            })
+    }
+
+    function deleteMovie (data) {
+        mainApi.deleteMovie(data._id)
+            .then(() => {
+                setSavedMovies((arrayMovie) => arrayMovie.filter((movie) => movie._id !== data._id))
             })
             .catch(err => {
                 setIsLoggedIn(false)
@@ -182,18 +186,6 @@ function App() {
         setIsInfoToolTip(false)
     }
 
-    // // монтирование данных на странице
-    // useEffect(() => {
-    //     const jwt = localStorage.getItem('jwt');
-    //     if (jwt && isLoggedIn) {
-    //         mainApi.getContent(jwt)
-    //             .then((currentUser) => {
-    //                 setCurrentUser(currentUser)
-    //             })
-    //             .catch(console.error)
-    //     }
-    // }, [isLoggedIn])
-
     return (
       <CurrentUserContext.Provider value={ currentUser }>
           <Header auth={isLoggedIn} openBurger={handleOpenBurger} />
@@ -217,13 +209,16 @@ function App() {
                   <ProtectedRoute loggedIn={isLoggedIn}>
                       <Movies
                           savedMovies={savedMovies}
-                          isLoading={isLoading}/>
+                          addMovie={addMovie}
+                      />
                   </ProtectedRoute>}/>
               <Route path="/saved-movies"
                      element={
                   <ProtectedRoute loggedIn={isLoggedIn}>
                       <SavedMovies
-                          moviesList={savedMovies}/>
+                          savedMovies={savedMovies}
+                          onDelete={deleteMovie}
+                      />
                   </ProtectedRoute>}/>
               <Route path="*"
                      element={<NotFound/>} />

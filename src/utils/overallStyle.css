@@ -56,6 +56,14 @@
     line-height: 12px;
 }
 
+.alertText {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: normal;
+    color: #3DDC84;
+    text-align: center;
+}
+
 
 @media screen and (max-width: 320px) {
     .link-nav {

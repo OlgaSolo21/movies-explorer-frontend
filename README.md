@@ -34,3 +34,9 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Ссылка на репозиторий
 https://github.com/OlgaSolo21/movies-explorer-frontend.git
+
+## Ссылка на PR
+https://github.com/OlgaSolo21/movies-explorer-frontend/pull/12
+
+## Ссылка на сайт проекта
+https://movies-diploma77.nomoredomainswork.ru

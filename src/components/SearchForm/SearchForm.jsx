@@ -1,29 +1,32 @@
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import AlertSearch from "../AlertSearch/AlertSearch";
 
-export default function SearchForm({findMovies, allMovies}) {
-    // const {values, handleChange, resetForm} = useFormValidation()
+export default function SearchForm({findMovies, toggleCheckBox, isCheckbox}) {
     const [ isSearch, setIsSearch ] = useState(''); //старт поиска фильмов
-    // const [isQueryAlert, setIsQueryAlert] = useState(false); // инфа к запросу
+    const path = useLocation()
+    const [searchAllert, setSearchAllert] = useState(false)
 
     function handleChangeInput(e) {
         setIsSearch(e.target.value)
     }
-
     function handleFindSubmit(e) { // подумать про очистку инпута/формы после сабмита
         e.preventDefault()
-        findMovies(isSearch)
-        if (isSearch) {//при сабмите устанавливаем значение данных
-            localStorage.setItem("searchMovies", isSearch)
+        if (isSearch.length === 0) {
+            setSearchAllert(true)
+        } else {
+            findMovies(isSearch)
+            setSearchAllert(false)
         }
     }
 
     useEffect(() => {
-        const findMovies = localStorage.getItem("searchMovies")
-        if (findMovies) {
+        if (path.pathname === "/movies" && localStorage.getItem("searchMovies")) {
+            const findMovies = localStorage.getItem("searchMovies")
             setIsSearch(findMovies)
         }
-    }, []);
+    }, [path]);
 
     return (
         <section className="search">
@@ -39,8 +42,9 @@ export default function SearchForm({findMovies, allMovies}) {
                 />
                 <button className="search__btn-find link" type="submit"/>
             </form>
-            <FilterCheckbox/>
-            {/*{!isQueryAlert && <span className="spanError">Для поиска введите ключевое слово</span> }*/}
+            <FilterCheckbox toggleCheckBox={toggleCheckBox} isCheckbox={isCheckbox}/>
+            {path.pathname === "/movies" && searchAllert && <AlertSearch text={"Для отображения фильмов введите ключевое слово в форму поиска"}/>}
+            {path.pathname === "/saved-movies" && searchAllert && <AlertSearch text={"Сохраненных фильмов нет"}/>}
         </section>
     )
 }
