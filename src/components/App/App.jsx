@@ -1,4 +1,4 @@
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 import CurrentUserContext from "../../context/CurrentUserContext";
@@ -18,6 +18,8 @@ import * as mainApi from "../../utils/MainApi"
 import ProtectedRoute from "../../context/ProtectedRoute";
 
 function App() {
+    const location = useLocation()
+    const path = location.pathname
 // навигируем на другой роут
     const navigate = useNavigate()
 //авторизация
@@ -96,7 +98,7 @@ function App() {
                     if (res) {
                         localStorage.removeItem('firstEnterMovies')
                         setIsLoggedIn(true)
-                        navigate("/movies", {replace: true});
+                        navigate(path);
                     }
                 })
                 .catch(console.error)
