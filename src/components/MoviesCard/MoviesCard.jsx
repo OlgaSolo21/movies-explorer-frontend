@@ -17,8 +17,9 @@ export default function MoviesCard({data, addMovie, savedMovies, onDelete}) { //
 
     function toggleButton() { // переключение сохранить-картинка
         if (savedMovies.find(saved => saved.movieId === data.id)) {
-            setButtonSave(true)
-            addMovie(data)
+            onDelete(savedMovies.find((m) => m.movieId === data.id))
+            // setButtonSave(true)
+            // addMovie(data)
         } else {
             setButtonSave(false)
             addMovie(data)

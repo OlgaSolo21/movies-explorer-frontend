@@ -208,6 +208,7 @@ function App() {
                       <Movies
                           savedMovies={savedMovies}
                           addMovie={addMovie}
+                          onDelete={deleteMovie}
                       />
                   </ProtectedRoute>}/>
               <Route path="/saved-movies"
