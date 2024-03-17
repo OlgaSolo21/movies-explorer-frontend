@@ -9,20 +9,31 @@ export default function Profile({ onUpdateUser, logout}) {
 
     const {values, handleChange, errors, isValid, resetForm, isInputValid} = useFormValidation()
 
-    const [inputEdit, setInputEdit] = useState(false) // состояние disabled
+    const [inputEdit, setInputEdit] = useState(false) // состояние редактирования
+    const [isProfileChanged, setIsProfileChanged] = useState(false); // зависимость кнопки от данных (текущие/новые)
 
     useEffect(() => {
+        // resetForm(currentUser);
+        // setIsProfileChanged(false)
         if (currentUser) {
             resetForm(currentUser);
         }
     }, [currentUser, resetForm]);
 
+    useEffect(() => {
+        if (values.name === currentUser.name && values.email === currentUser.email) {
+            setIsProfileChanged(false)
+        } else {
+            setIsProfileChanged(true)
+        }
+    }, [values.name, currentUser.name, values.email, currentUser.email]);
+
     function handleSaveEdit(e) {
         e.preventDefault()
         setInputEdit(false)
         onUpdateUser({
-            name: values.name,
-            email: values.email
+                name: values.name,
+                email: values.email
         })
     }
 
@@ -40,7 +51,7 @@ export default function Profile({ onUpdateUser, logout}) {
                         minLength={2}
                         maxLength={30}
                         required
-                        value={values.name || ""}
+                        value={inputEdit ? values.name : currentUser.name}
                         onChange={handleChange}
                         disabled={!inputEdit}
                         // pattern={NAME_REGEX}
@@ -55,7 +66,7 @@ export default function Profile({ onUpdateUser, logout}) {
                         required
                         placeholder="Введите E-mail"
                         onChange={handleChange}
-                        value={values.email || ""}
+                        value={inputEdit ? values.email : currentUser.email}
                         disabled={!inputEdit}
                         // pattern={EMAIL_REGEX}
                     />
@@ -75,8 +86,7 @@ export default function Profile({ onUpdateUser, logout}) {
                 <button type="submit"
                         className="profile__saveEditButton link"
                         onClick={handleSaveEdit}
-                        disabled={!isValid}
-                >Сохранить</button>
+                        disabled={!isValid || !isProfileChanged}>Сохранить</button>
             )}
         </section>
     )

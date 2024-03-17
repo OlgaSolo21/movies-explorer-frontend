@@ -121,19 +121,19 @@ function App() {
 
     function handleUpdateProfile(data) { // изменение имени/почты в аккаунте(/profile)
         mainApi.editProfilePatch(data)
-            .then((newValue) => {
+            .then((res) => {
                 setIsInfoToolTip(true)
                 setIsSuccess({
                     message: "Данные успешно изменены",
                     success: true
                 })
-                setCurrentUser(newValue)
+                setCurrentUser(res)
             })
             .catch(err => {
-                setIsLoggedIn(false)
+                // setCurrentUser(err)
                 setIsInfoToolTip(true)
                 setIsSuccess({
-                    message: "При обновлении профиля произошла ошибка",
+                    message: "Пользователь с таким email уже существует",
                     success: false
                 })
             })
