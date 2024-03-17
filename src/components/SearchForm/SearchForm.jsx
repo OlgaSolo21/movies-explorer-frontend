@@ -3,8 +3,8 @@ import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import AlertSearch from "../AlertSearch/AlertSearch";
 
-export default function SearchForm({findMovies, toggleCheckBox, isCheckbox}) {
-    const [ isSearch, setIsSearch ] = useState(''); //старт поиска фильмов
+export default function SearchForm({findMovies, toggleCheckBox, isCheckbox, isSearch, setIsSearch}) {
+   // const [ isSearch, setIsSearch ] = useState(''); //старт поиска фильмов
     const path = useLocation()
     const [searchAllert, setSearchAllert] = useState(false)
 
@@ -17,6 +17,7 @@ export default function SearchForm({findMovies, toggleCheckBox, isCheckbox}) {
             setSearchAllert(true)
         } else {
             findMovies(isSearch)
+            //localStorage.setItem("searchMovies", isSearch)
             setSearchAllert(false)
         }
     }

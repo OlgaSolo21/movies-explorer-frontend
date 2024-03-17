@@ -1,12 +1,14 @@
 export default function FilterCheckbox({toggleCheckBox, isCheckbox}) {
-    const checkBoxToggleClassName = `checkbox__label ${!isCheckbox ? "checkbox__label_inactive" : "checkbox__label_active"}`
+    //const checkBoxToggleClassName = `checkbox__label ${!isCheckbox ? "checkbox__label_inactive" : "checkbox__label_active"}`
     return (
-        <div className="checkbox">
-            <button
-                className={checkBoxToggleClassName}
-                onClick={toggleCheckBox}
+        <form className="checkbox">
+            <input
+                type="checkbox"
+               className="checkbox__input"
+                onChange={toggleCheckBox}
+                checked={isCheckbox}
             />
-            <p className="checkbox__title">Короткометражки</p>
-        </div>
+            <span className="checkbox__title">Короткометражки</span>
+        </form>
     )
 }

@@ -4,6 +4,7 @@ import * as moviesApi from "../../utils/MoviesApi"
 import {useEffect, useState} from "react";
 import {filterCheckbox, filterSearchMovie} from "../../utils/utils";
 
+
 export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ movies - "Фильмы"
     const [isLoading, setIsLoading] = useState(false)
 
@@ -13,19 +14,23 @@ export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ 
     const [moviesAll, setMoviesAll] = useState([]) // массив всех найденных фильмов
     const [moviesFilterCheck, setMoviesFilterCheck] = useState([]) // массив найденных и отфильтрованных
     const [isCheckbox, setIsCheckbox] = useState(false) // чекбокс короткометражек (изначально отключен)
-    
+    const [ isSearch, setIsSearch ] = useState(''); //старт поиска фильмов
+
+
     function filterMovieFind(data, search, shorts) { // фильтрация фильмоы и короткометражек
         const movieResult = filterSearchMovie(data, search, shorts)
         setMoviesAll(movieResult)
         setMoviesFilterCheck(shorts ? filterCheckbox(movieResult) : movieResult)
-        //localStorage.setItem('shortsCheckbox', JSON.stringify(isCheckbox))
         localStorage.setItem('findMovie', JSON.stringify(movieResult));
         localStorage.setItem('firstEnterMovies', JSON.stringify(data)); // нужен ли? выводит в сторадж все фильмы
     }
 
     function toggleCheckBox() {
         setIsCheckbox(!isCheckbox)
+        // localStorage.setItem('shortsCheckbox', JSON.stringify(!isCheckbox))
+        // localStorage.setItem("searchMovies", JSON.stringify(isSearch))
         if (!isCheckbox) {
+            handleFindMovies(isSearch)
             if (filterCheckbox(moviesAll).length === 0) {
                 setMoviesFilterCheck(filterCheckbox(moviesAll))
             } else {
@@ -34,12 +39,11 @@ export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ 
         } else {
             setMoviesFilterCheck(moviesAll)
         }
-        localStorage.setItem('shortsCheckbox', !isCheckbox)
     }
 
     function handleFindMovies(search) {//сабмит поиска формы
         localStorage.setItem("searchMovies", search)
-        localStorage.setItem('shortsCheckbox', JSON.stringify(isCheckbox))
+        localStorage.setItem('shortsCheckbox', JSON.stringify(!isCheckbox))
         // console.log(isCheckbox)
         // console.log(JSON.stringify(isCheckbox))
         if (localStorage.getItem('firstEnterMovies')) {
@@ -78,6 +82,7 @@ export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ 
             setMoviesAll(storageFindMovie)
             if (localStorage.getItem('shortsCheckbox') === 'true') {
                 setMoviesFilterCheck(filterCheckbox(storageFindMovie))
+                setMoviesAll(storageFindMovie)
             } else {
                 setMoviesFilterCheck(storageFindMovie)
             }
@@ -100,7 +105,9 @@ export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ 
         <section>
             <SearchForm findMovies={handleFindMovies}
                         toggleCheckBox={toggleCheckBox}
-                        isCheckbox={isCheckbox}/>
+                        isCheckbox={isCheckbox}
+                        isSearch={isSearch}
+                        setIsSearch={setIsSearch}/>
             <MoviesCardList moviesAll={moviesFilterCheck}
                             addMovie={addMovie}
                             isLoading={isLoading}
