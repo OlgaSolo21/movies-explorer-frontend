@@ -3,8 +3,9 @@ export default function FilterCheckbox({toggleCheckBox, isCheckbox}) {
     return (
         <div className="checkbox">
             <button
-                    className={checkBoxToggleClassName}
-                    onClick={toggleCheckBox}/>
+                className={checkBoxToggleClassName}
+                onClick={toggleCheckBox}
+            />
             <p className="checkbox__title">Короткометражки</p>
         </div>
     )

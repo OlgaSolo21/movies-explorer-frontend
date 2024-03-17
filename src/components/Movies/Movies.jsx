@@ -18,32 +18,9 @@ export default function Movies({savedMovies, addMovie}) { // РОУТ movies - "
         const movieResult = filterSearchMovie(data, search, shorts)
         setMoviesAll(movieResult)
         setMoviesFilterCheck(shorts ? filterCheckbox(movieResult) : movieResult)
+        //localStorage.setItem('shortsCheckbox', JSON.stringify(isCheckbox))
         localStorage.setItem('findMovie', JSON.stringify(movieResult));
         localStorage.setItem('firstEnterMovies', JSON.stringify(data)); // нужен ли? выводит в сторадж все фильмы
-    }
-
-    function handleFindMovies(search) {//сабмит поиска формы
-        localStorage.setItem("searchMovies", search)
-        localStorage.setItem('shortsCheckbox', isCheckbox)
-        if (localStorage.getItem('firstEnterMovies')) {
-            const storageFirstEnter = JSON.parse(localStorage.getItem('firstEnterMovies'))
-            filterMovieFind(storageFirstEnter, search, isCheckbox)
-        } else {
-            setIsLoading(true)
-            moviesApi.getMovies()
-                .then((movieData) => {
-                    filterMovieFind(movieData, search, isCheckbox)
-                    setErrLoad(false)
-                    setStartSearch(false)
-                })
-                .catch((err) => {
-                    setErrLoad(true)
-                    console.log(err)
-                })
-                .finally(() => {
-                    setIsLoading(false)
-                })
-        }
     }
 
     function toggleCheckBox() {
@@ -58,6 +35,33 @@ export default function Movies({savedMovies, addMovie}) { // РОУТ movies - "
             setMoviesFilterCheck(moviesAll)
         }
         localStorage.setItem('shortsCheckbox', !isCheckbox)
+    }
+
+    function handleFindMovies(search) {//сабмит поиска формы
+        localStorage.setItem("searchMovies", search)
+        localStorage.setItem('shortsCheckbox', JSON.stringify(isCheckbox))
+        // console.log(isCheckbox)
+        // console.log(JSON.stringify(isCheckbox))
+        if (localStorage.getItem('firstEnterMovies')) {
+            const storageFirstEnter = JSON.parse(localStorage.getItem('firstEnterMovies'))
+            filterMovieFind(storageFirstEnter, search, isCheckbox)
+        } else {
+            setIsLoading(true)
+            moviesApi.getMovies()
+                .then((movieData) => {
+                    filterMovieFind(movieData, search, isCheckbox)
+                    //toggleCheckBox(movieData)
+                    setErrLoad(false)
+                    setStartSearch(false)
+                })
+                .catch((err) => {
+                    setErrLoad(true)
+                    console.log(err)
+                })
+                .finally(() => {
+                    setIsLoading(false)
+                })
+        }
     }
 
     useEffect(() => {
@@ -103,7 +107,6 @@ export default function Movies({savedMovies, addMovie}) { // РОУТ movies - "
                             savedMovies={savedMovies}
                             errLoad={errLoad}
                             startSearch={startSearch}
-                            // savedRout={false}
             />
         </section>
     )

@@ -42,7 +42,8 @@ export default function SearchForm({findMovies, toggleCheckBox, isCheckbox}) {
                 />
                 <button className="search__btn-find link" type="submit"/>
             </form>
-            <FilterCheckbox toggleCheckBox={toggleCheckBox} isCheckbox={isCheckbox}/>
+            <FilterCheckbox toggleCheckBox={toggleCheckBox}
+                            isCheckbox={isCheckbox}/>
             {path.pathname === "/movies" && searchAllert && <AlertSearch text={"Для отображения фильмов введите ключевое слово в форму поиска"}/>}
             {path.pathname === "/saved-movies" && searchAllert && <AlertSearch text={"Сохраненных фильмов нет"}/>}
         </section>
