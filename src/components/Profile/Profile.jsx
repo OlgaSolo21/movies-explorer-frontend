@@ -1,7 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 import CurrentUserContext from "../../context/CurrentUserContext";
 import useFormValidation from "../../hook/useFormValidation"
-import {EMAIL_REGEX, NAME_REGEX} from "../../utils/constans";
 
 export default function Profile({ onUpdateUser, logout}) {
     //подписываемся на контекст и подставляем данные имени и о себе в попап
@@ -13,8 +12,6 @@ export default function Profile({ onUpdateUser, logout}) {
     const [isProfileChanged, setIsProfileChanged] = useState(false); // зависимость кнопки от данных (текущие/новые)
 
     useEffect(() => {
-        // resetForm(currentUser);
-        // setIsProfileChanged(false)
         if (currentUser) {
             resetForm(currentUser);
         }
