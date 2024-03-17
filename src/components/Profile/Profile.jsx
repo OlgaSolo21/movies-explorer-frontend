@@ -2,7 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import CurrentUserContext from "../../context/CurrentUserContext";
 import useFormValidation from "../../hook/useFormValidation"
 
-export default function Profile({ onUpdateUser, logout}) {
+export default function Profile({ onUpdateUser, logout, isLoading}) {
     //подписываемся на контекст и подставляем данные имени и о себе в попап
     const currentUser = useContext(CurrentUserContext);
 
@@ -33,6 +33,8 @@ export default function Profile({ onUpdateUser, logout}) {
                 email: values.email
         })
     }
+
+    const buttonState = `profile__saveEditButton link ${!isValid || isLoading || !isProfileChanged ? "profile__saveEditButton_disabled" : "profile__saveEditButton_active"}`
 
     return(
         <section className="profile">
@@ -81,7 +83,7 @@ export default function Profile({ onUpdateUser, logout}) {
                 </div>
             ) : (
                 <button type="submit"
-                        className="profile__saveEditButton link"
+                        className={buttonState}
                         onClick={handleSaveEdit}
                         disabled={!isValid || !isProfileChanged}>Сохранить</button>
             )}

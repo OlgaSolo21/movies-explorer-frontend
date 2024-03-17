@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import useFormValidation from "../../hook/useFormValidation";
 import {EMAIL_REGEX} from "../../utils/constans";
 
-export default function Login({onLogin}) {
+export default function Login({onLogin, isLoading}) {
     const {values, handleChange, errors, isValid, isInputValid} = useFormValidation()
 
     function handleSubmit(e) {
@@ -12,6 +12,8 @@ export default function Login({onLogin}) {
             password: values.password
         });
     }
+
+    const buttonState = `auth__button-login auth__button link ${!isValid || isLoading ? "auth__button_disabled" : "auth__button"}`
 
     return(
         <section className='auth'>
@@ -51,7 +53,7 @@ export default function Login({onLogin}) {
                     <span className={`${isInputValid ? "spanError" : '' }`}>{errors.password}</span>
                 </label>
                 <button type="submit"
-                        className="auth__button auth__button_login link"
+                        className={buttonState}
                         disabled={!isValid}
                 >Войти</button>
             </form>

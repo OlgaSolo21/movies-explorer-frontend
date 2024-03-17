@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import useFormValidation from "../../hook/useFormValidation";
 
-export default function Register({onRegister}) {
+export default function Register({onRegister, isLoading}) {
     const {values, handleChange, errors, isValid, isInputValid} = useFormValidation()
 
     function handleSubmit(e) {
@@ -12,6 +12,8 @@ export default function Register({onRegister}) {
             password: values.password
         });
     }
+
+    const buttonState = `auth__button-register auth__button link ${!isValid || isLoading ? "auth__button_disabled" : "auth__button"}`
 
     return (
         <section className='auth'>
@@ -64,7 +66,7 @@ export default function Register({onRegister}) {
                     <span className={`${isInputValid ? "spanError" : '' }`}>{errors.password}</span>
                 </label>
                 <button type="submit"
-                        className="auth__button auth__button_register link"
+                        className={buttonState}
                         disabled={!isValid}
                 >Зарегистрироваться</button>
             </form>

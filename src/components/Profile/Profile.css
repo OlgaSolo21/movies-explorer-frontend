@@ -81,15 +81,18 @@
 }
 
 .profile__saveEditButton {
-    background-color: #3456f3;
-    color: #ffffff;
     min-width: 100%;
     min-height: 45px;
     border-radius: 3px;
     margin: 220px 0 70px;
 }
 
-.profile__saveEditButton:disabled {
+.profile__saveEditButton_active {
+    background-color: #3456f3;
+    color: #ffffff;
+}
+
+.profile__saveEditButton_disabled {
     background-color: #8B8B8B;
     color: #000000;
 }

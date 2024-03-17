@@ -1,4 +1,4 @@
-import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 import CurrentUserContext from "../../context/CurrentUserContext";
@@ -20,6 +20,9 @@ import ProtectedRoute from "../../context/ProtectedRoute";
 function App() {
     const location = useLocation()
     const path = location.pathname
+
+    const [isLoading, setIsLoading] = useState(false);
+
 // навигируем на другой роут
     const navigate = useNavigate()
 //авторизация
@@ -42,6 +45,7 @@ function App() {
     const [savedMovies, setSavedMovies] = useState([])
 
     function handleRegister(data) { //направляем после регистрации
+        setIsLoading(true);
         mainApi.register(data)
             .then(res => {
                if (res) {
@@ -62,10 +66,14 @@ function App() {
                 })
                 console.log(err)
             })
+            .finally(() => {
+                setIsLoading(false);
+            });
 
     }
 
     function handleLogin(data) { // направляем после логина-входа
+        setIsLoading(true);
         mainApi.login(data)
             .then((res) => {
                 if (res && res.token) {
@@ -87,6 +95,9 @@ function App() {
                     success: false
                 })
             })
+            .finally(() => {
+                setIsLoading(false);
+            });
 
     }
 
@@ -121,6 +132,7 @@ function App() {
     }, [isLoggedIn]);
 
     function handleUpdateProfile(data) { // изменение имени/почты в аккаунте(/profile)
+        setIsLoading(true);
         mainApi.editProfilePatch(data)
             .then((res) => {
                 setIsInfoToolTip(true)
@@ -137,6 +149,9 @@ function App() {
                     success: false
                 })
             })
+            .finally(() => {
+                setIsLoading(false);
+            });
     }
 
     function addMovie (data) {
@@ -194,15 +209,36 @@ function App() {
               <Route path="/"
                      element={<Main/>} />
               <Route path="/signup"
-                     element={ <Register onRegister={handleRegister}/>}/>
+                     element={ !isLoggedIn ? (
+                         <>
+                             <Register
+                                 onRegister={handleRegister}
+                                 isLoading={isLoading}
+                             />
+                         </>
+                     ) : (
+                         <Navigate to="/" />
+                     )}
+              />
               <Route path="/signin"
-                     element={<Login onLogin={handleLogin}/>}/>
+                     element={ !isLoggedIn ? (
+                         <>
+                             <Login
+                                 onLogin={handleLogin}
+                                 isLoading={isLoading}
+                             />
+                         </>
+                     ) : (
+                         <Navigate to="/" />
+                     )}
+              />
               <Route path="/profile"
                      element={
                   <ProtectedRoute loggedIn={isLoggedIn}>
                       <Profile
-                         onUpdateUser={handleUpdateProfile}
-                         logout={handleLogOut}/>
+                          isLoading={isLoading}
+                          onUpdateUser={handleUpdateProfile}
+                          logout={handleLogOut}/>
                   </ProtectedRoute>}/>
               <Route path="/movies"
                      element={

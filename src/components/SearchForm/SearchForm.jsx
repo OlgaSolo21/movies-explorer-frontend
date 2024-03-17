@@ -7,7 +7,6 @@ export default function SearchForm({findMovies, toggleCheckBox, isCheckbox, isSe
    // const [ isSearch, setIsSearch ] = useState(''); //старт поиска фильмов
     const path = useLocation()
     const [searchAllert, setSearchAllert] = useState(false)
-
     function handleChangeInput(e) {
         setIsSearch(e.target.value)
     }
@@ -21,7 +20,6 @@ export default function SearchForm({findMovies, toggleCheckBox, isCheckbox, isSe
             setSearchAllert(false)
         }
     }
-
     useEffect(() => {
         if (path.pathname === "/movies" && localStorage.getItem("searchMovies")) {
             const findMovies = localStorage.getItem("searchMovies")
@@ -31,7 +29,7 @@ export default function SearchForm({findMovies, toggleCheckBox, isCheckbox, isSe
 
     return (
         <section className="search">
-            <form className="search__form" onSubmit={handleFindSubmit}>
+            <form className="search__form" onSubmit={handleFindSubmit} noValidate>
                 <input
                     type="text"
                     name="search"

@@ -6,6 +6,8 @@ const NAME_REGEX = (email) => {
 const BASE_URL = 'https://api.movies-diploma77.nomoredomainswork.ru';
 const MOVIES_URL = 'https://api.nomoreparties.co';
 
+const SHORTS_TIME = 40
+
 const INIT_VISIBLE_MOVIES = { // инициализируем ряд карточек
     MOBILE: 5,
     TAB: 8,
@@ -33,5 +35,6 @@ module.exports = {
     MOVIES_URL,
     INIT_VISIBLE_MOVIES,
     STEP_VISIBLE_MOVIES,
-    WIDTH_SCREEN_MOVIES
+    WIDTH_SCREEN_MOVIES,
+    SHORTS_TIME
 };

@@ -1,3 +1,5 @@
+import {SHORTS_TIME} from "./constans";
+
 export function filterSearchMovie(data, search) {
     const moviesByQuery = data.filter((f) => {
         const nameRU = f.nameRU.toLowerCase();
@@ -20,5 +22,5 @@ export function filterSearchMovie(data, search) {
 // }
 
 export function filterCheckbox(data) {
-    return data.filter((f) => f.duration <= 40)
+    return data.filter((f) => f.duration <= SHORTS_TIME)
 }

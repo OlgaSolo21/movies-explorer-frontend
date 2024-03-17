@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {filterCheckbox, filterSearchMovie} from "../../utils/utils";
 
 
-export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ movies - "Фильмы"
+export default function Movies({savedMovies, addMovie, onDelete, }) { // РОУТ movies - "Фильмы"
     const [isLoading, setIsLoading] = useState(false)
 
     const [errLoad, setErrLoad] = useState(false) // текст ошибки 500 в MoviesCardList
