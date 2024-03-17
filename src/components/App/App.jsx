@@ -49,7 +49,6 @@ function App() {
                        success: true
                    })
                    handleLogin(data)
-                   // navigate('/signin', { replace: true });
                }
             })
             .catch(err => {
@@ -130,7 +129,6 @@ function App() {
                 setCurrentUser(res)
             })
             .catch(err => {
-                // setCurrentUser(err)
                 setIsInfoToolTip(true)
                 setIsSuccess({
                     message: "Пользователь с таким email уже существует",

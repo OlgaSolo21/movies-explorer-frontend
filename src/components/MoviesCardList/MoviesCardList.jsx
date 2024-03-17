@@ -9,7 +9,6 @@ import lodash from "lodash";
 export default function MoviesCardList(
     {isLoading, moviesAll, savedMovies,
         addMovie, onDelete, errLoad, startSearch}) { //РЕНДЕР ВСЕХ КАРТОЧЕК НА СТРАНИЦУ
-    // const {pathname} = useLocation()
     const [countMovies, setCountMovies] = useState(0)
 
     useEffect(() => {
@@ -73,36 +72,3 @@ export default function MoviesCardList(
         </section>
     )
 }
-
-                // <>
-                //     {pathname === '/saved-movies'} ? (
-                //     <>
-                //         <ul className="movie__list">
-                //             {moviesAll.map((data) => (
-                //                 <MoviesCard
-                //                     savedRout={savedRout}
-                //                     addMovie={addMovie}
-                //                     onDelete={onDelete}
-                //                     moviesAll={moviesAll}
-                //                     savedMovies={savedMovies}
-                //                     data={data}
-                //                     key={savedRout ? data._id : data.id}
-                //                 />
-                //             ))}
-                //         </ul>
-                //     </>
-                //     ) : (
-                //     <ul className="movie__list">
-                //         {moviesAll.slice(0, countMovies).map((data) => (
-                //             <MoviesCard
-                //                 savedRout={savedRout}
-                //                 addMovie={addMovie}
-                //                 onDelete={onDelete}
-                //                 moviesAll={moviesAll}
-                //                 savedMovies={savedMovies}
-                //                 data={data}
-                //                 key={savedRout ? data._id : data.id}
-                //             />
-                //         ))}
-                //     </ul>
-                // </>

@@ -1,6 +1,5 @@
 import {Link} from "react-router-dom";
 import useFormValidation from "../../hook/useFormValidation";
-import {EMAIL_REGEX, NAME_REGEX} from "../../utils/constans";
 
 export default function Register({onRegister}) {
     const {values, handleChange, errors, isValid, isInputValid} = useFormValidation()
@@ -28,7 +27,6 @@ export default function Register({onRegister}) {
                     <input
                         type="text"
                         className='auth__input'
-                        //className={`${!isInputValid ? "auth__input" : '' }`}
                         name="name"
                         placeholder="Введите имя"
                         minLength={2}
@@ -36,7 +34,6 @@ export default function Register({onRegister}) {
                         required
                         onChange={handleChange}
                         value={values.name || ""}
-                        // pattern={NAME_REGEX}
                     />
                     <span className={`${isInputValid ? "spanError" : '' }`}>{errors.name}</span>
                 </label>
@@ -49,7 +46,6 @@ export default function Register({onRegister}) {
                         placeholder="Введите E-mail"
                         onChange={handleChange}
                         value={values.email || ""}
-                        // pattern={EMAIL_REGEX}
                     />
                     <span className={`${isInputValid ? "spanError" : '' }`}>{errors.email}</span>
                 </label>

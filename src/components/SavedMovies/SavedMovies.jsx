@@ -40,7 +40,6 @@ export default function SavedMovies({savedMovies, onDelete}) { // РОУТ saved
                             savedMovies={savedMovies}
                             onDelete={onDelete}
                             startSearch={startSearch}
-                            // savedRout={true}
             />
         </section>
     )

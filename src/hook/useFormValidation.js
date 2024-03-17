@@ -1,5 +1,5 @@
 import {useCallback, useState} from "react";
-import {regName, isEmail, NAME_REGEX, EMAIL_REGEX} from "../utils/constans";
+import {NAME_REGEX, EMAIL_REGEX} from "../utils/constans";
 
 export default function useFormValidation() {
     const [values, setValues] = useState({});
@@ -15,8 +15,6 @@ export default function useFormValidation() {
         const value = event.target.value;
 
         setValues({...values, [name]: value});
-        //setErrors({...errors, [name]: event.target.validationMessage });
-        //setIsValid(event.target.closest("#form").checkValidity());
 
         if (name === "name") { // реализация через паттерны в инпуты
             if (!NAME_REGEX(value)) {
@@ -38,12 +36,6 @@ export default function useFormValidation() {
             setIsInputValid({...isInputValid, [name]: event.target.validity.valid})
             setIsValid(event.target.closest("#form").checkValidity());
         }, 100);
-
-        // setIsInputValid((previousIsInputValid) => {
-        //     return { ...previousIsInputValid, [name]: event.target.validity.valid };
-        // })
-
-        // setIsInputValid({...isInputValid, [name]: event.target.validity.valid})
     };
 
     const resetForm = useCallback(
