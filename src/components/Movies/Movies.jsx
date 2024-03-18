@@ -14,7 +14,6 @@ export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ 
     const [moviesAll, setMoviesAll] = useState([]) // массив всех найденных фильмов
     const [moviesFilterCheck, setMoviesFilterCheck] = useState([]) // массив найденных и отфильтрованных
     const [isCheckbox, setIsCheckbox] = useState(false) // чекбокс короткометражек (изначально отключен)
-    const [ isSearch, setIsSearch ] = useState(''); //старт поиска фильмов
 
 
     function filterMovieFind(data, search, shorts) { // фильтрация фильмоы и короткометражек
@@ -27,7 +26,6 @@ export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ 
 
     function toggleCheckBox() {
         setIsCheckbox(!isCheckbox)
-        // localStorage.setItem("searchMovies", JSON.stringify(isSearch))
         if (!isCheckbox) {
             //handleFindMovies(isSearch)
             if (filterCheckbox(moviesAll).length === 0) {
@@ -80,7 +78,7 @@ export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ 
         if (localStorage.getItem('findMovie')) {
             const storageFindMovie = JSON.parse(localStorage.getItem('findMovie'));
             setMoviesAll(storageFindMovie)
-            if (localStorage.getItem('shortsCheckbox') === 'true') {
+            if (localStorage.getItem('shortsCheckbox')) {
                 setMoviesFilterCheck(filterCheckbox(storageFindMovie))
                 setMoviesAll(storageFindMovie)
             } else {
