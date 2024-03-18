@@ -23,9 +23,9 @@ const STEP_VISIBLE_MOVIES = { // шаг - добавление карточек 
 }
 
 const WIDTH_SCREEN_MOVIES = { // px
-    MOBILE: 767,
-    TAB: 1279,
-    LAPTOP: 1440,
+    MOBILE: 320,
+    TAB: 760,
+    LAPTOP: 1200,
 }
 
 module.exports = {

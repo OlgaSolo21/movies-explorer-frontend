@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {filterCheckbox, filterSearchMovie} from "../../utils/utils";
 
 
-export default function Movies({savedMovies, addMovie, onDelete, }) { // РОУТ movies - "Фильмы"
+export default function Movies({savedMovies, addMovie, onDelete}) { // РОУТ movies - "Фильмы"
     const [isLoading, setIsLoading] = useState(false)
 
     const [errLoad, setErrLoad] = useState(false) // текст ошибки 500 в MoviesCardList
@@ -27,10 +27,9 @@ export default function Movies({savedMovies, addMovie, onDelete, }) { // РОУ�
 
     function toggleCheckBox() {
         setIsCheckbox(!isCheckbox)
-        // localStorage.setItem('shortsCheckbox', JSON.stringify(!isCheckbox))
         // localStorage.setItem("searchMovies", JSON.stringify(isSearch))
         if (!isCheckbox) {
-            handleFindMovies(isSearch)
+            //handleFindMovies(isSearch)
             if (filterCheckbox(moviesAll).length === 0) {
                 setMoviesFilterCheck(filterCheckbox(moviesAll))
             } else {
@@ -39,11 +38,12 @@ export default function Movies({savedMovies, addMovie, onDelete, }) { // РОУ�
         } else {
             setMoviesFilterCheck(moviesAll)
         }
+        localStorage.setItem('shortsCheckbox', JSON.stringify(!isCheckbox))
     }
 
     function handleFindMovies(search) {//сабмит поиска формы
         localStorage.setItem("searchMovies", search)
-        localStorage.setItem('shortsCheckbox', JSON.stringify(!isCheckbox))
+        localStorage.setItem('shortsCheckbox', JSON.stringify(isCheckbox))
         // console.log(isCheckbox)
         // console.log(JSON.stringify(isCheckbox))
         if (localStorage.getItem('firstEnterMovies')) {
@@ -100,14 +100,16 @@ export default function Movies({savedMovies, addMovie, onDelete, }) { // РОУ�
             setStartSearch(false);
         }
     }, [moviesFilterCheck]);
-    
+
     return (
         <section>
-            <SearchForm findMovies={handleFindMovies}
-                        toggleCheckBox={toggleCheckBox}
-                        isCheckbox={isCheckbox}
-                        isSearch={isSearch}
-                        setIsSearch={setIsSearch}/>
+            <SearchForm
+                findMovies={handleFindMovies}
+                toggleCheckBox={toggleCheckBox}
+                // isSearch={isSearch}
+                // setIsSearch={setIsSearch}
+                isCheckbox={isCheckbox}
+            />
             <MoviesCardList moviesAll={moviesFilterCheck}
                             addMovie={addMovie}
                             isLoading={isLoading}

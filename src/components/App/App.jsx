@@ -40,7 +40,7 @@ function App() {
 // стейт currentUser в корневом компоненте чтобы данные о текущем пользователе были видны во всех местах
     const [currentUser, setCurrentUser] = useState({})
 
-    // временные переменные
+
     // const [movies, setMovies] = useState(constantFilm) // временное решение для карточек с фильмами
     const [savedMovies, setSavedMovies] = useState([])
 

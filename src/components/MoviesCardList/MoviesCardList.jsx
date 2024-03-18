@@ -5,44 +5,50 @@ import Preloader from "../Preloader/Preloader";
 import AlertSearch from "../AlertSearch/AlertSearch";
 import {INIT_VISIBLE_MOVIES, STEP_VISIBLE_MOVIES, WIDTH_SCREEN_MOVIES} from "../../utils/constans";
 import lodash from "lodash";
+import {useLocation} from "react-router-dom";
 
 export default function MoviesCardList(
     {isLoading, moviesAll, savedMovies,
         addMovie, onDelete, errLoad, startSearch}) { //РЕНДЕР ВСЕХ КАРТОЧЕК НА СТРАНИЦУ
     const [countMovies, setCountMovies] = useState(0)
 
-    useEffect(() => {
-        function visibleMovieList() {
-            const screenWidth = window.innerWidth;
-            let loadInRow;
-            if (screenWidth <= WIDTH_SCREEN_MOVIES.MOBILE) {
-                loadInRow = INIT_VISIBLE_MOVIES.MOBILE;
-            } else if (screenWidth <= WIDTH_SCREEN_MOVIES.TAB) {
-                loadInRow = INIT_VISIBLE_MOVIES.TAB;
-            } else if (screenWidth <= WIDTH_SCREEN_MOVIES.LAPTOP) {
-                loadInRow = INIT_VISIBLE_MOVIES.LAPTOP;
-            }
-            setCountMovies(loadInRow)
+    const {pathname} = useLocation()
+    function stepLoadMovie() {
+
+        let loadInRow = {init: INIT_VISIBLE_MOVIES.LAPTOP, step: STEP_VISIBLE_MOVIES.LAPTOP};
+        if (window.innerWidth > WIDTH_SCREEN_MOVIES.LAPTOP) {
+            loadInRow.init = INIT_VISIBLE_MOVIES.LAPTOP
+            loadInRow.step = STEP_VISIBLE_MOVIES.LAPTOP
+        } else if (window.innerWidth > WIDTH_SCREEN_MOVIES.TAB) {
+            loadInRow.init = INIT_VISIBLE_MOVIES.TAB
+            loadInRow.step = STEP_VISIBLE_MOVIES.TAB
+        } else if (window.innerWidth > WIDTH_SCREEN_MOVIES.MOBILE) {
+            loadInRow.init = INIT_VISIBLE_MOVIES.MOBILE
+            loadInRow.step = STEP_VISIBLE_MOVIES.MOBILE
         }
 
-        const visibleMovieListDebounced = lodash.debounce(visibleMovieList, 1000);
-        visibleMovieListDebounced();
-        window.addEventListener('resize', visibleMovieListDebounced);
-        return () => {
-            window.removeEventListener('resize', visibleMovieList);
-        }
-    }, [])
-
-    function loadMore() {//загрузка фильмов на кнопку "еще"
-        const screenWidth = window.innerWidth;
-        if (screenWidth <= WIDTH_SCREEN_MOVIES.MOBILE) {
-            setCountMovies(step => step + STEP_VISIBLE_MOVIES.MOBILE);
-        } else if (screenWidth <= WIDTH_SCREEN_MOVIES.TAB) {
-            setCountMovies(step => step + STEP_VISIBLE_MOVIES.TAB);
-        } else if (screenWidth <= WIDTH_SCREEN_MOVIES.LAPTOP) {
-            setCountMovies(step => step + STEP_VISIBLE_MOVIES.LAPTOP);
-        }
+        return loadInRow
     }
+
+    useEffect(() => {
+            const movieVisible = stepLoadMovie()
+            setCountMovies(movieVisible.init)
+
+            const movieResize = lodash.debounce(() => {
+                const addMoreMovie = stepLoadMovie()
+                setCountMovies(addMoreMovie.init)
+            })
+
+            window.addEventListener('resize', movieResize);
+            return () => {
+                window.removeEventListener('resize', movieResize);
+            }
+    }, [moviesAll])
+
+    const handleShowMore = () => {
+        let newCardCount = countMovies + stepLoadMovie().step;
+        setCountMovies(newCardCount);
+    };
 
     return (
         <section className="movie">
@@ -64,10 +70,10 @@ export default function MoviesCardList(
                                     key={ data.id || data._id}
                                 />
                             ))}
-                        </ul>
+                </ul>
             )}
-            {countMovies < moviesAll.length && (
-                <ButtonMore handleMoreLoad={loadMore}/>
+            {pathname === "/movies" && countMovies < moviesAll.length && (
+                <ButtonMore handleMoreLoad={handleShowMore}/>
             )}
         </section>
     )

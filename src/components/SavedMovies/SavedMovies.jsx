@@ -35,7 +35,10 @@ export default function SavedMovies({savedMovies, onDelete}) { // РОУТ saved
         <section>
             <SearchForm toggleCheckBox={toggleCheckBox}
                         isCheckbox={isCheckbox}
-                        findMovies={findSavedMovies}/>
+                        findMovies={findSavedMovies}
+                        // setIsSearch={setSearchSavedMovie}
+                        // isSearch={searchSavedMovie}
+            />
             <MoviesCardList moviesAll={moviesFilterCheck}
                             savedMovies={savedMovies}
                             onDelete={onDelete}
