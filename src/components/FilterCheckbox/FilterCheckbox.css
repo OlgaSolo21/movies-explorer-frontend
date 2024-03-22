@@ -2,23 +2,10 @@
     display: flex;
     margin: 30px 0 42px;
     justify-content: center;
-
-}
-
-.checkbox__label {
-    cursor: pointer;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    width: 35px;
-}
-
-.checkbox__label_inactive {
-    background-image: url("../../images/checkboxDisactive.svg");
-}
-
-.checkbox__label_active {
-    background-image: url("../../images/checkboxActive.svg");
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
 }
 
 .checkbox__title {
@@ -27,6 +14,44 @@
     line-height: 18px;
     margin: 0;
     padding-left: 13px;
+}
+
+.checkbox__input {
+    position: relative;
+    width: 32px;
+    height: 15px;
+    appearance: none;
+    outline: none;
+    background: #343434;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow:
+            0 4px 4px rgba(50, 50, 71, 0.08),
+            0 4px 8px rgba(50, 50, 71, 0.06);
+}
+
+.checkbox__input::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background: #a0a0a0;
+    transition: 0.3s;
+    transform: scale(0.8);
+}
+
+.checkbox__input:checked {
+    background-color: rgba(61, 220, 132, 1);
+}
+
+.checkbox__input:checked::before {
+    left: 16px;
+    background-color: #ffff;
 }
 
 @media screen and (max-width: 768px){

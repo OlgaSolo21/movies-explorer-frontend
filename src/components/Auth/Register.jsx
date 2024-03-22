@@ -1,24 +1,19 @@
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import useFormValidation from "../../hook/useFormValidation";
 
-export default function Register({onRegister}) {
-    const [inputValue, setInputValue] = useState({
-        name: '',
-        email: '',
-        password: ''
-    })
-    const [inputError, setInputError] = useState({});
+export default function Register({onRegister, isLoading}) {
+    const {values, handleChange, errors, isValid, isInputValid} = useFormValidation()
 
     function handleSubmit(e) {
         e.preventDefault();
-        onRegister(inputValue);
+        onRegister({
+            name: values.name,
+            email: values.email,
+            password: values.password
+        });
     }
 
-    function handleChangeInput(e) {
-        const{name , value, validationMessage} = e.target;
-        setInputValue({...inputValue, [name]: value});
-        setInputError({...inputError, [name]: validationMessage});
-    }
+    const buttonState = `auth__button-register auth__button link ${!isValid || isLoading ? "auth__button_disabled" : "auth__button"}`
 
     return (
         <section className='auth'>
@@ -27,18 +22,22 @@ export default function Register({onRegister}) {
                 <h1 className="auth__title">Добро пожаловать!</h1>
             </div>
             <form className='auth__form'
-                  onSubmit={handleSubmit}>
+                  onSubmit={handleSubmit}
+                  id="form"
+                  noValidate>
                 <label className="auth__label">Имя
                     <input
                         type="text"
                         className='auth__input'
                         name="name"
                         placeholder="Введите имя"
+                        minLength={2}
+                        maxLength={30}
                         required
-                        onChange={handleChangeInput}
-                        value={inputValue.name}
+                        onChange={handleChange}
+                        value={values.name || ""}
                     />
-                    <span className="auth__span-error">{inputError.name}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.name}</span>
                 </label>
                 <label className="auth__label">E-mail
                     <input
@@ -47,10 +46,10 @@ export default function Register({onRegister}) {
                         type="email"
                         name="email"
                         placeholder="Введите E-mail"
-                        onChange={handleChangeInput}
-                        value={inputValue.email}
+                        onChange={handleChange}
+                        value={values.email || ""}
                     />
-                    <span className="auth__span-error">{inputError.email}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.email}</span>
                 </label>
                 <label className="auth__label">Пароль
                     <input
@@ -61,13 +60,15 @@ export default function Register({onRegister}) {
                         placeholder="Придумайте пароль"
                         minLength={4}
                         maxLength={16}
-                        onChange={handleChangeInput}
-                        value={inputValue.password}
+                        onChange={handleChange}
+                        value={values.password || ""}
                     />
-                    <span className="auth__span-error">{inputError.password}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.password}</span>
                 </label>
                 <button type="submit"
-                        className="auth__button auth__button_register link">Зарегистрироваться</button>
+                        className={buttonState}
+                        disabled={!isValid}
+                >Зарегистрироваться</button>
             </form>
             <p className='auth__subtitle'>Уже зарегистрированы?&ensp;
                 <Link to='/signin' className='link-nav link'>Войти</Link></p>

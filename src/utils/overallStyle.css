@@ -39,6 +39,32 @@
     font-weight: 400;
 }
 
+
+/*.buttonInvalid {*/
+/*    background-color: #8B8B8B;*/
+/*    color: #000000;*/
+/*    min-width: 100%;*/
+/*    min-height: 45px;*/
+/*    border-radius: 3px;*/
+/*    margin: 220px 0 70px;*/
+/*}*/
+
+.spanError {
+    color: #EE3465;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+}
+
+.alertText {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: normal;
+    color: #3DDC84;
+    text-align: center;
+}
+
+
 @media screen and (max-width: 320px) {
     .link-nav {
         font-size: 12px;

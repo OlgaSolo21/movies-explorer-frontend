@@ -1,21 +1,29 @@
 .movie__item {
+    width: 100%;
+    max-height: 271px;
+    min-height: 236px;
+    height: 100%;
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
     position: relative;
     gap: 14px;
     cursor: pointer;
+}
+
+.movie__trailer {
+    position: relative;
+    height: 190px;
     width: 100%;
-    min-height: 236px;
-    height: 100%;
 }
 
 .movie__image {
-    border-radius: 6px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 5px;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    display: block;
-    object-fit: cover;
 }
 
 .movie__content {
@@ -40,8 +48,6 @@
 
 .movie__duration {
     max-width: 52px;
-    width: 100%;
-    max-height: 18px;
     height: 100%;
     margin: 0;
     background-color: #2F2F2F;
@@ -62,17 +68,19 @@
     position: absolute;
     background-color: #313131;
     border-radius: 30px;
-    font-size: 10px;
-    font-weight: 400;
-    line-height: 9px;
-    color: #ffffff;
     right: 14px;
     top: 14px;
-    box-sizing: border-box;
-    padding: 6px 7px;
+    padding: 0;
     border: none;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.movie__button_save {
+    background-image: url("../../images/buttonSave.svg");
+    width: 72px;
+    height: 21px;
+    background-color: transparent;
 }
 
 .movie__button_saved {
@@ -92,6 +100,8 @@
 @media screen and (max-width: 890px){
     .movie__item {
         gap: 25px;
+        max-width: 339px;
+        max-height: 258px;
     }
 
     .movie__content {
@@ -102,6 +112,8 @@
 @media screen and (max-width: 400px) {
     .movie__item {
         gap: 16px;
+        max-width: 300px;
+        min-height: 199px;
     }
 
     .movie__title {

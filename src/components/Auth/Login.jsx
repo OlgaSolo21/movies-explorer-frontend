@@ -1,23 +1,20 @@
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import useFormValidation from "../../hook/useFormValidation";
+import {EMAIL_REGEX} from "../../utils/constans";
 
-export default function Login({onRegister}) {
-    const [inputValue, setInputValue] = useState({
-        email: '',
-        password: ''
-    })
-    const [inputError, setInputError] = useState({});
+export default function Login({onLogin, isLoading}) {
+    const {values, handleChange, errors, isValid, isInputValid} = useFormValidation()
 
     function handleSubmit(e) {
         e.preventDefault();
-        onRegister(inputValue);
+        onLogin({
+            email: values.email,
+            password: values.password
+        });
     }
 
-    function handleChangeInput(e) {
-        const{name , value, validationMessage} = e.target;
-        setInputValue({...inputValue, [name]: value});
-        setInputError({...inputError, [name]: validationMessage});
-    }
+    const buttonState = `auth__button-login auth__button link ${!isValid || isLoading ? "auth__button_disabled" : "auth__button"}`
+
     return(
         <section className='auth'>
             <div className="auth__head">
@@ -25,7 +22,9 @@ export default function Login({onRegister}) {
                 <h1 className="auth__title">Рады видеть!</h1>
             </div>
             <form className='auth__form'
-                  onSubmit={handleSubmit}>
+                  onSubmit={handleSubmit}
+                  id="form"
+                  noValidate>
                 <label className="auth__label">E-mail
                     <input
                         required
@@ -33,10 +32,11 @@ export default function Login({onRegister}) {
                         type="email"
                         name="email"
                         placeholder="Введите E-mail"
-                        onChange={handleChangeInput}
-                        value={inputValue.email}
+                        onChange={handleChange}
+                        value={values.email || ""}
+                        // pattern={EMAIL_REGEX}
                     />
-                    <span className="auth__span-error">{inputError.email}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.email}</span>
                 </label>
                 <label className="auth__label">Пароль
                     <input
@@ -47,13 +47,15 @@ export default function Login({onRegister}) {
                         placeholder="Придумайте пароль"
                         minLength={4}
                         maxLength={16}
-                        onChange={handleChangeInput}
-                        value={inputValue.password}
+                        onChange={handleChange}
+                        value={values.password || ""}
                     />
-                    <span className="auth__span-error">{inputError.password}</span>
+                    <span className={`${isInputValid ? "spanError" : '' }`}>{errors.password}</span>
                 </label>
                 <button type="submit"
-                        className="auth__button auth__button_login link">Войти</button>
+                        className={buttonState}
+                        disabled={!isValid}
+                >Войти</button>
             </form>
             <p className='auth__subtitle'>Еще не зарегистрированы?&ensp;
                 <Link to='/signup' className='link-nav link'>Регистрация</Link></p>

@@ -1,7 +1,7 @@
 import successIcon from '../../images/successIcon.svg'
 import errorIcon from '../../images/errorIcon.svg'
 
-export default function InfoTooltip({isOpen, onClose, isSuccess}) {
+export default function InfoTooltip({isOpen, onClose, isSuccess, message}) {
     return (
         <div className={`tooltip ${isOpen ? 'tooltip_opened' : ''}`}>
             <div className="tooltip__content">
@@ -16,7 +16,7 @@ export default function InfoTooltip({isOpen, onClose, isSuccess}) {
                     alt='Изображение уведомления'
                     src={`${isSuccess ? successIcon : errorIcon}`}
                 />
-                <h2 className='tooltip__title'>{`${isSuccess ? "Успешно" : "Что-то пошло не так! Попробуйте ещё раз."}`}</h2>
+                <h2 className='tooltip__title'>{message}</h2>
             </div>
         </div>
     )
