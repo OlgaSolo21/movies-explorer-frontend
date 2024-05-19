@@ -39,4 +39,4 @@ https://github.com/OlgaSolo21/movies-explorer-frontend.git
 https://github.com/OlgaSolo21/movies-explorer-frontend/pull/12
 
 ## Ссылка на сайт проекта
-https://movies-diploma77.nomoredomainswork.ru
+https://movies-diploma77.nomoredomainswork.ru (ПРИОСТАНОВЛЕН)
