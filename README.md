@@ -49,4 +49,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 https://github.com/OlgaSolo21/movies-explorer-frontend.git
 
 ## Ссылка на сайт проекта
-https://movies-diploma77.nomoredomainswork.ru (ПРИОСТАНОВЛЕН)
+https://movies-diploma77.nomoredomainswork.ru 
